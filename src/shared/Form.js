@@ -1,7 +1,13 @@
 import React from 'react'
 import styled from "styled-components";
+import { primaryColor, gray, secondaryColor, thirdColorLight, secondaryColorDark, thirdColor, thirdColorHovered } from '../constants/theme';
+
+
+const inputWidth = '250px';
 
 const InputWrapper = styled.div`
+  width: ${inputWidth};
+
   &:not(:last-child) {
     margin-bottom: 12px;
   }
@@ -13,26 +19,32 @@ const InputWrapper = styled.div`
     font-size: 12px;
   }
 
+  div {
+    background: linear-gradient(45deg, ${primaryColor}, ${secondaryColor}, ${thirdColor});
+    padding: 4px;
+    border-radius: 4px;
+  }
+
   input, textarea {
-    width: 200px;
+    width: 242px;
     border-radius: 4px;
     border: none;
-    box-shadow: 0 0 0 1px #a3c5db;
     height: 32px;
     outline: unset;
     padding: 8px;
-    font-size: 14px;
-    color: #a3c5db;
-    background: #ffffff36;
+    font-size: 16px;
+    color: black;
+    background: transparent;
 
     &:focus {
-      color: black;
-      box-shadow: 0 0 0 2px #6fc5fe;
+      color: #19518f;
+      box-shadow: none;
       background: #ffffffde;
     }
   }
 
   textarea {
+    resize: vertical;
     font-family: sans-serif;
     min-height: 64px;
   }
@@ -46,12 +58,14 @@ const TextInput = ({onChange, onFocus, value, label, id, children}) => {
       <label htmlFor={id}>
         {label}
       </label>
-      <input 
-        type="text" 
-        value={value} 
-        onChange={onChange} 
-        onFocus={onFocus} 
-      />
+      <div>
+        <input 
+          type="text" 
+          value={value} 
+          onChange={onChange} 
+          onFocus={onFocus} 
+        />
+      </div>
     </InputWrapper>
   );
 }
@@ -64,11 +78,13 @@ const Textarea = ({onChange, onFocus, value, label, id, children}) => {
       <label htmlFor={id}>
         {label}
       </label>
-      <textarea 
-        value={value} 
-        onChange={onChange} 
-        onFocus={onFocus} 
-      />
+      <div>
+        <textarea 
+          value={value} 
+          onChange={onChange} 
+          onFocus={onFocus} 
+        />
+      </div>
     </InputWrapper>
   );
 }
