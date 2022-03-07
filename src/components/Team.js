@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { ContentWrapper, SectionLight, SectionDark } from '../shared/Layout';
+import { ContentWrapper } from '../shared/Layout';
 import { H2Light } from '../shared/Typography';
 import pwe_eth from '../assets/members/pwe_eth.png';
 import slyracoon23 from '../assets/members/slyracoon23.png';
@@ -22,32 +22,27 @@ const Team = () => {
 
   return (
     <main>
-      <SectionLight>
-        <ContentWrapper>
-          <H2Light>Who we are</H2Light>
-          <p>Bunch of crypto enthusiasts. What else.</p>
-        </ContentWrapper>
-      </SectionLight>
-      <SectionDark>
-        <ContentWrapper>
-          <MembersWrapper>
-            {members.map(m => (
-              <li key={m.idx}>
-                <div
-                  className="img"
-                  src={m.avatar}
-                  onMouseEnter={e => onHoverImage(e, m.avatar)}
-                  onMouseLeave={e => onUnHoverImage(e, m.avatar)}
-                  style={{ background: avatarImageStyle({ url: m.avatar, withGradient: true }) }}
-                  alt={'Avatar of ' + m.name} 
-                />
-                <h4>{m.name}</h4>
-                <p>{m.function}</p>
-              </li>
-            ))}
-          </MembersWrapper>
-        </ContentWrapper>
-      </SectionDark>
+      <ContentWrapper>
+        <H2Light>Who we are</H2Light>
+        <p>Bunch of crypto enthusiasts. What else.</p>
+    
+        <MembersWrapper>
+          {members.map(m => (
+            <li key={m.idx}>
+              <div
+                className="img"
+                src={m.avatar}
+                onMouseEnter={e => onHoverImage(e, m.avatar)}
+                onMouseLeave={e => onUnHoverImage(e, m.avatar)}
+                style={{ background: avatarImageStyle({ url: m.avatar, withGradient: true }) }}
+                alt={'Avatar of ' + m.name} 
+              />
+              <h4>{m.name}</h4>
+              <p>{m.function}</p>
+            </li>
+          ))}
+        </MembersWrapper>
+      </ContentWrapper>
     </main>
   )
 }

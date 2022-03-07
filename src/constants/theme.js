@@ -14,10 +14,11 @@ const thirdColorHovered = '#30499275';
 
 const black = '#111518';
 const gray = '#f1f1f1';
+const darkGray = '#222429';
 
 export { 
   primaryColor, primaryColorHovered, primaryColorDark,
   secondaryColor, secondaryColorDark,
   thirdColor, thirdColorHovered, thirdColorLight,
-  black, gray 
+  black, gray, darkGray
 };

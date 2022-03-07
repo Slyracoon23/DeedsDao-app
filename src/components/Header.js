@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { SectionLight } from '../shared/Layout';
 import logo from '../assets/logo.png';
 import { breakpoint, device } from '../constants/breakpoints';
 import { menu, hamburgerIcon, closeIcon, menuHeight } from '../constants/menu';
@@ -38,11 +37,9 @@ const Header = ({setMobileOpen, mobileOpen}) => {
                   <img src={closeIcon} alt="Close Menu"  />
                 </div>
                 <nav>
-                  <SectionLight>
-                    <ul>
-                      {menuEntries}
-                    </ul>
-                  </SectionLight>
+                  <ul>
+                    {menuEntries}
+                  </ul>
                 </nav>
               </>
             )}
@@ -120,7 +117,7 @@ const MobileMenu = styled.div`
 
   & > div {
     border-radius: 50%;
-    background: ${gray};
+    background: #b7b3b329;
     padding: 12px;
 
     img {
@@ -141,6 +138,7 @@ const MobileMenu = styled.div`
     right: 0;
     left: 0;
     bottom: 0;
+    background: #231a2c;
 
     ul {
       width: 100%;
@@ -177,7 +175,7 @@ const Logo = styled.div`
 `;
 
 const FullHeader = styled.div`
-  background: white;
+  background: #00000061;
   box-shadow: -1px 4px 25px 6px rgb(43 61 80 / 48%);
   display: flex;
   padding: 0 20px;

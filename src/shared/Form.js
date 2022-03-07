@@ -20,9 +20,13 @@ const InputWrapper = styled.div`
   }
 
   div {
-    background: linear-gradient(45deg, ${primaryColor}, ${secondaryColor}, ${thirdColor});
+    background: linear-gradient(45deg,rgba(111 197 254 / 50%),rgb(148 92 209 / 50%),rgb(170 72 167 / 50%));
     padding: 4px;
-    border-radius: 4px;
+    border-radius: 8px;
+
+    &:focus-within {
+      background: linear-gradient(45deg, ${primaryColor}, ${secondaryColor}, ${thirdColor});
+    }
   }
 
   input, textarea {

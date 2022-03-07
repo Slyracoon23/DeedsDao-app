@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { ContentWrapper, SectionLight, SectionDark } from '../shared/Layout';
+import { ContentWrapper } from '../shared/Layout';
 import { H2Light } from '../shared/Typography';
 import { primaryColor } from '../constants/theme';
 import { defaultImages } from '../constants/mockup-data';
@@ -8,28 +8,24 @@ import { defaultImages } from '../constants/mockup-data';
 const Marketplace = () => {
   return (
     <main>
-      <SectionLight>
-        <ContentWrapper>
-          <H2Light>Marketplace</H2Light>
-          <p>An overview of all NFTs and securities in the DeedsDAO ecosystem.</p>
-          </ContentWrapper>
-        </SectionLight>
-        <SectionDark>
-          <CardsWrapper>
-          {defaultImages.map((s, idx) => (
-            <div key={idx} className="card">
-              <div>
-                <span className="img-wrapper">
-                  <div className="img" style={{background: 'url(' + s + ') center center / cover'}}></div>
-                </span>
-              </div>
-              <h4>The Graph</h4>
-              <p>The Graph is an indexing protocol for querying networks like Ethereum and IPFS. Anyone can build and publish open APIs, called subgraphs, making data easily accessible.</p>
-              <div className="button-wrapper"><button><span>99$</span></button></div>
+      <ContentWrapper>
+        <H2Light>Marketplace</H2Light>
+        <p>An overview of all NFTs and securities in the DeedsDAO ecosystem.</p>
+        <CardsWrapper>
+        {defaultImages.map((s, idx) => (
+          <div key={idx} className="card">
+            <div>
+              <span className="img-wrapper">
+                <div className="img" style={{background: 'url(' + s + ') center center / cover'}}></div>
+              </span>
             </div>
-          ))}
-          </CardsWrapper>
-      </SectionDark>
+            <h4>The Graph</h4>
+            <p>The Graph is an indexing protocol for querying networks like Ethereum and IPFS. Anyone can build and publish open APIs, called subgraphs, making data easily accessible.</p>
+            <div className="button-wrapper"><button><span>99$</span></button></div>
+          </div>
+        ))}
+        </CardsWrapper>
+      </ContentWrapper>
     </main>
   )
 }

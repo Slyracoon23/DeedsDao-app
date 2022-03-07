@@ -1,15 +1,13 @@
 import React from 'react'
 import styled from "styled-components";
+import { primaryColor  } from '../constants/theme';
 
 const H2Light = ({children}) => {
   const StyledH2 = styled.h2`
-    font-size: 60px;
+    font-size: 24px;
     margin-bottom: 20px;
     line-height: 1.25;
-    font-weight: bold;
-    background: -webkit-linear-gradient(0,#55ceff,#f675ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: ${primaryColor};
     text-shadow: 0 14px 20px rgb(0 0 0 / 15%);
   `;
 
