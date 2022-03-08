@@ -77,8 +77,6 @@ const DesktopMenu = styled.nav`
         padding: 0 12px;
         position: relative;
         border-radius: 2px;
-        text-transform: uppercase;
-        letter-spacing: 1.2px;
 
         &::after {
           position: absolute;

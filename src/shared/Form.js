@@ -16,6 +16,7 @@ const InputWrapper = styled.div`
     display: block;
     text-transform: uppercase;
     margin-bottom: 6px;
+    line-height: 1.4;
     font-size: 12px;
   }
 
@@ -47,6 +48,19 @@ const InputWrapper = styled.div`
     }
   }
 
+  .button-wrapper {
+    text-align: center;
+    margin-top: 20px;
+    background: ${primaryColor};
+
+    button {
+      height: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+  }
+
   textarea {
     resize: vertical;
     font-family: sans-serif;
@@ -54,9 +68,20 @@ const InputWrapper = styled.div`
   }
 `;
 
-const TextInput = ({onChange, onFocus, value, label, id, children}) => {
-  console.log(onChange, 'pattern="[0-9],\.*"', /* evt.target.validity.valid */);
+const ButtonSubmit = ({onChange, onFocus, label, id, children}) => {
+  return (
+    <InputWrapper>
+      <div className="button-wrapper">
+        <button 
+          onChange={onChange} 
+          onFocus={onFocus} 
+        >{label || 'Submit'}</button>
+      </div>
+    </InputWrapper>
+  );
+}
 
+const TextInput = ({onChange, onFocus, value, label, id, children}) => {
   return (
     <InputWrapper>
       <label htmlFor={id}>
@@ -94,4 +119,4 @@ const Textarea = ({onChange, onFocus, value, label, id, children}) => {
 }
 
 
-export { TextInput, Textarea };
+export { TextInput, Textarea, ButtonSubmit };

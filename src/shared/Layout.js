@@ -9,7 +9,7 @@ const ContentWrapper = ({children}) => {
     padding: 40px 40px 70px 40px;
     background: linear-gradient(46deg, #ffffff00, #00000029);
     margin: 50px auto;
-    border-radius: 10px;
+    border-radius: 6px;
 
     ${breakpoint(device.lg)} {
       max-width: 665px;
