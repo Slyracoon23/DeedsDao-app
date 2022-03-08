@@ -22,25 +22,32 @@ const Home = () => {
         </H2Light>
         <p>Add a new deed or use edit an existing one...</p>
 
-        <StyledForm>
+        <FormWrapper>
+          <form>
             {inputs.map(i => (
-              i.type === 'text' ? <TextInput id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
-              : i.type === 'textarea' ? <Textarea id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
-              : i.type === 'submit' ? <ButtonSubmit id={i.id} label={i.label} onChange={e => console.log(e)} />
-              : null
+              i.type === 'text' ? <TextInput key={i.id} id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
+            : i.type === 'textarea' ? <Textarea key={i.id} id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
+            : i.type === 'submit' ? <ButtonSubmit key={i.id} id={i.id} label={i.label} onChange={e => console.log(e)} />
+            : null
             ))}
-          </StyledForm>
+          </form>
+        </FormWrapper>
       </ContentWrapper>
     </main>
   )
 }
 
-const StyledForm = styled.form`
-  border-radius: 8px;
-  background: #00000026;
-  display: inline-block;
-  padding: 30px;
-  margin-top: 20px;
+const FormWrapper = styled.div`
+  margin: 20px auto 0 auto;
+  display: flex;
+  justify-content: center;
+
+  form {
+    background: #00000061;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #9797971c;
+  }
 `;
 
 export default Home;
