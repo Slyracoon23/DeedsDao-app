@@ -1,9 +1,80 @@
-import React from 'react'
+import React from 'react';
 import styled from "styled-components";
-import { primaryColor, gray, secondaryColor, thirdColorLight, secondaryColorDark, thirdColor, thirdColorHovered } from '../constants/theme';
-
+import { primaryColor, secondaryColor, thirdColor } from '../constants/theme';
 
 const inputWidth = '250px';
+
+const Form = ({inputs}) => (
+  <FormWrapper>
+    <form>
+      {inputs.map(i => (
+        i.type === 'text' ? <TextInput key={i.id} id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
+      : i.type === 'textarea' ? <Textarea key={i.id} id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
+      : i.type === 'submit' ? <ButtonSubmit key={i.id} id={i.id} label={i.label} onChange={e => console.log(e)} />
+      : null
+      ))}
+    </form>
+  </FormWrapper>
+)
+
+const ButtonSubmit = ({onChange, onFocus, label, id, children}) => (
+  <InputWrapper>
+    <div className="button-wrapper">
+      <button 
+        onChange={onChange} 
+        onFocus={onFocus} 
+      >{label || 'Submit'}</button>
+    </div>
+  </InputWrapper>
+);
+
+const TextInput = ({onChange, onFocus, value, label, id, children}) => (
+  <InputWrapper>
+    <label htmlFor={id}>
+      {label}
+    </label>
+    <div>
+      <input 
+        type="text" 
+        value={value} 
+        onChange={onChange} 
+        onFocus={onFocus} 
+      />
+    </div>
+  </InputWrapper>
+);
+
+const Textarea = ({onChange, onFocus, value, label, id, children}) => {
+  console.log(onChange, 'pattern="[0-9],\.*"', /* evt.target.validity.valid */);
+
+  return (
+    <InputWrapper>
+      <label htmlFor={id}>
+        {label}
+      </label>
+      <div>
+        <textarea 
+          value={value} 
+          onChange={onChange} 
+          onFocus={onFocus} 
+        />
+      </div>
+    </InputWrapper>
+  );
+}
+
+const FormWrapper = styled.div`
+  margin: 20px auto 0 auto;
+  display: flex;
+  justify-content: center;
+
+  form {
+    background: #00000061;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #9797971c;
+  }
+`;
 
 const InputWrapper = styled.div`
   width: ${inputWidth};
@@ -68,55 +139,4 @@ const InputWrapper = styled.div`
   }
 `;
 
-const ButtonSubmit = ({onChange, onFocus, label, id, children}) => {
-  return (
-    <InputWrapper>
-      <div className="button-wrapper">
-        <button 
-          onChange={onChange} 
-          onFocus={onFocus} 
-        >{label || 'Submit'}</button>
-      </div>
-    </InputWrapper>
-  );
-}
-
-const TextInput = ({onChange, onFocus, value, label, id, children}) => {
-  return (
-    <InputWrapper>
-      <label htmlFor={id}>
-        {label}
-      </label>
-      <div>
-        <input 
-          type="text" 
-          value={value} 
-          onChange={onChange} 
-          onFocus={onFocus} 
-        />
-      </div>
-    </InputWrapper>
-  );
-}
-
-const Textarea = ({onChange, onFocus, value, label, id, children}) => {
-  console.log(onChange, 'pattern="[0-9],\.*"', /* evt.target.validity.valid */);
-
-  return (
-    <InputWrapper>
-      <label htmlFor={id}>
-        {label}
-      </label>
-      <div>
-        <textarea 
-          value={value} 
-          onChange={onChange} 
-          onFocus={onFocus} 
-        />
-      </div>
-    </InputWrapper>
-  );
-}
-
-
-export { TextInput, Textarea, ButtonSubmit };
+export { Form, TextInput, Textarea, ButtonSubmit };

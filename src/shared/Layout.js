@@ -2,10 +2,9 @@ import React from 'react'
 import styled from "styled-components";
 import { breakpoint, device } from '../constants/breakpoints';
 
-const ContentWrapper = ({children}) => {
-  const Wrapper = styled.div`
+const Wrapper = styled.div`
     box-shadow: 0 0 0 1px #ffffff14, inset 0 0 20px 20px #0000000f;
-    max-width: 800px;
+    max-width: fit-content;
     padding: 40px;
     background: linear-gradient(46deg, #ffffff00, #00000029);
     margin: 50px auto;
@@ -16,11 +15,10 @@ const ContentWrapper = ({children}) => {
     }
   `;
 
-  return (
-    <Wrapper>
-      {children}
-    </Wrapper>
-  );
-}
+const ContentWrapper = ({children}) => (
+  <Wrapper>
+    {children}
+  </Wrapper>
+);
 
 export {  ContentWrapper };
