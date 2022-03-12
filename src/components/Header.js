@@ -1,19 +1,15 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import useMediaQuery from '@mui/material/useMediaQuery';
 import logo from '../assets/logo.png';
 import { breakpoint, device } from '../constants/breakpoints';
-import { primaryColor, gray, secondaryColor, thirdColorLight, secondaryColorDark, thirdColor, thirdColorHovered } from '../constants/theme';
-
-const menuHeight = '';
 
 const Header = ({setMobileOpen, mobileOpen}) => {
-  const isMobile = useMediaQuery(breakpoint(device.md));
   const accountBalance = '0$';
   const accountAddress = '0x137054be6978FcC75617bDF918cA91947a0DA94c';
 
-  const shortAddress = (address) => address.substring(0,5) + '..' + address.substring(address.length - 3, address.length)
+  const shortAddress = (address) => address.substring(0,5) 
+    + '..' 
+    + address.substring(address.length - 3, address.length)
 
   return (
     <FullHeader>
@@ -39,7 +35,6 @@ const AccountBalance = styled.div`
   flex-grow: 1;
 
   span {
-    height: 32px;
     padding: 8px;
     border: thin solid #ae92bb;
     border-radius: 8px;
@@ -74,7 +69,6 @@ const FullHeader = styled.div`
   box-shadow: -1px 4px 25px 6px rgb(43 61 80 / 48%);
   display: flex;
   padding: 0 20px;
-  height: ${menuHeight};
   position: relative;
   z-index: 1;
   border-bottom: 4px solid #6fc5fe;

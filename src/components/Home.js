@@ -1,51 +1,54 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import AddNewDeed from '../components/AddNewDeed';
+import { Link } from "react-router-dom";
 import { ContentWrapper } from '../shared/Layout';
 import { H2Light, H3Dark } from '../shared/Typography';
-import { discord, docs } from '../constants/icons';
+import AddNewDeed from '../components/AddNewDeed';
 
 const Home = () => {
   const [ addClicked, setAddClicked ] = useState(false);
 
   return (
-    <main>
-      <LinksWrapper>
-        <a target="_blank" rel="noopener noreferrer" href="https://app.gitbook.com/o/9s1HWmu67VMunIKY0cOc/s/ntM5l4suiGLNXTWUeHAb/">
-          <img src={docs} alt="Docs" />
-          Documentation
-        </a>
-
-        <a target="_blank" rel="noopener noreferrer" href="https://app.gitbook.com/o/9s1HWmu67VMunIKY0cOc/s/ntM5l4suiGLNXTWUeHAb/">
-        <img src={discord} alt="Discord" />
-          Discord
-        </a>
-      </LinksWrapper>
-      
+    <main> 
       <ContentWrapper>
         <H2Light>Add or manage your existing deeds</H2Light>
-        
-        <DeedsWrapper>
-          <H3Dark>My deeds</H3Dark>
+        <Flex>
+          <DeedsWrapper>
+            <H3Dark>My deeds</H3Dark>
 
-          <div>
-            {!addClicked && (
-            <span>
-              <p>You don't have any deeds yet. </p>
-              <ButtonFilled onClick={() => setAddClicked(true)}>Add Deed</ButtonFilled>
-            </span>
-            )}
-          </div>
-        </DeedsWrapper>
+              <div>
+              {addClicked && (
+                <span>
+                  <p>You don't have any deeds yet. </p>
+                  <ButtonOutlined onClick={() => setAddClicked(false)}>Cancel ‹</ButtonOutlined>
+                </span>
+                )}
+                {!addClicked && (
+                <span>
+                  <p>You don't have any deeds yet. </p>
+                  <ButtonFilled onClick={() => setAddClicked(true)}>Add Deed ›</ButtonFilled>
+                </span>
+                )}
+              </div>
+          </DeedsWrapper>
+          {addClicked && <AddNewDeed /> }
+        </Flex> 
+        
       </ContentWrapper>
     </main>
   )
 }
 
+const Flex = styled.div`
+  display: flex;
+`;
+
 const DeedsWrapper = styled.div`
-  border-radius: 6px;
-  background: #00000059;
-  padding: 30px;
+    border-radius: 6px;
+    background: #00000059;
+    padding: 30px;
+    min-width: 375px;
+    height: fit-content;
 
   & > div {
     height: 200px;
@@ -63,28 +66,6 @@ const DeedsWrapper = styled.div`
   }
 `;
 
-const LinksWrapper = styled.div`
-  max-width: fit-content;
-  margin: 30px auto;
-  padding: 20px;
-  background: #00000059;
-  border-radius: 4px;
-
-  a {
-    color: white;
-    display: inline-flex;
-    align-items: center;
-
-    img {
-      margin-right: 8px;
-    }
-
-    &:not(:last-child) {
-      margin-right: 20px;
-    }
-  }
-`;
-
 const Button = styled.button`
   border-radius: 4px;
   height: 40px;
@@ -95,6 +76,9 @@ const Button = styled.button`
 
 const ButtonFilled = styled(Button)`
   background: #ae92bb;
+  & > * {
+    color: white;
+  }
 `;
 
 const ButtonOutlined = styled(Button)`

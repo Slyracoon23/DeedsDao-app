@@ -64,7 +64,7 @@ const Textarea = ({onChange, onFocus, value, label, id, children}) => {
 }
 
 const FormWrapper = styled.div`
-  margin: 20px auto 0 auto;
+  margin-left: 20px;
   display: flex;
   justify-content: center;
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Form } from '../shared/Form';
-import { H2Light } from '../shared/Typography';
+import { Link } from "react-router-dom";
+import { ContentWrapper } from '../shared/Layout';
 import styled from "styled-components";
+
 
 const AddNewDeed = () => {
   const inputs = [
@@ -19,5 +21,9 @@ const AddNewDeed = () => {
     </>
   )
 }
+
+const StyledLink = styled(Link)`
+  color: white;
+`;
 
 export default AddNewDeed;
