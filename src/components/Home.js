@@ -12,8 +12,8 @@ const Home = () => {
     <main> 
       <ContentWrapper>
         <H2Light>Add or manage your existing deeds</H2Light>
-        <Flex>
-          <DeedsWrapper>
+        <DeedsWrapper>
+          <div>
             <H3Dark>My deeds</H3Dark>
 
               <div>
@@ -30,37 +30,37 @@ const Home = () => {
                 </span>
                 )}
               </div>
-          </DeedsWrapper>
+          </div>
           {addClicked && <AddNewDeed /> }
-        </Flex> 
+        </DeedsWrapper> 
         
       </ContentWrapper>
     </main>
   )
 }
 
-const Flex = styled.div`
-  display: flex;
-`;
-
 const DeedsWrapper = styled.div`
-    border-radius: 6px;
-    background: #00000059;
-    padding: 30px;
-    min-width: 375px;
-    height: fit-content;
+  display: flex;
 
-  & > div {
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    & > div {
+      border-radius: 6px;
+      background: #00000059;
+      padding: 30px;
+      min-width: 375px;
+      height: fit-content;
 
-    span {
-      text-align: center;
-      
-      p {
-        margin-bottom: 8px;
+    & > div {
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        text-align: center;
+        
+        p {
+          margin-bottom: 8px;
+        }
       }
     }
   }
