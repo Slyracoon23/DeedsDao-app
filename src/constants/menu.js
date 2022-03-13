@@ -3,8 +3,9 @@ import closeIcon from '../assets/icons/close.svg';
 
 const menu = [
   { idx: 1, label: 'Home', url: '/' },
-  { idx: 2, label: 'Pool', url: '/pool' },
+  { idx: 2, label: 'Pool', url: '/add-pool' },
   { idx: 3, label: 'Swap', url: '/swap' },
+  { idx: 4, label: 'Deposits', url: '/pool' },
 ];
 
 const menuHeight = '96px';

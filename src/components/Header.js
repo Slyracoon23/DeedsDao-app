@@ -5,7 +5,7 @@ import logo from '../assets/logo.png';
 import { breakpoint, device } from '../constants/breakpoints';
 import { menu, menuHeight } from '../constants/menu';
 import { docs, discord } from '../constants/icons';
-import { primaryColor, secondaryColor, primaryColorDark, primaryColorHovered, thirdColorLight } from '../constants/theme';
+import { primaryColor, secondaryColor } from '../constants/theme';
 
 const Header = ({setMobileOpen, mobileOpen}) => {
   const accountAddress = '0x137054be6978FcC75617bDF918cA91947a0DA94c';

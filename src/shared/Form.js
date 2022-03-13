@@ -10,19 +10,18 @@ const Form = ({inputs}) => (
       {inputs.map(i => (
         i.type === 'text' ? <TextInput key={i.id} id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
       : i.type === 'textarea' ? <Textarea key={i.id} id={i.id} value={i.value} label={i.label} onChange={e => console.log(e)} />
-      : i.type === 'submit' ? <ButtonSubmit key={i.id} id={i.id} label={i.label} onChange={e => console.log(e)} />
+      : i.type === 'submit' ? <ButtonSubmit key={i.id} id={i.id} label={i.label} onClick={i.action} />
       : null
       ))}
     </form>
   </FormWrapper>
 )
 
-const ButtonSubmit = ({onChange, onFocus, label, id, children}) => (
+const ButtonSubmit = ({onClick, label, id, children}) => (
   <InputWrapper>
     <div className="button-wrapper">
       <button 
-        onChange={onChange} 
-        onFocus={onFocus} 
+        onClick={e => onClick(true)} 
       >{label || 'Submit'}</button>
     </div>
   </InputWrapper>

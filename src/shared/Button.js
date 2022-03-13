@@ -12,6 +12,7 @@ const Button = styled.button`
 
   & > * {
     color: white;
+    letter-spacing: 0.4px;
   }
 `;
 
