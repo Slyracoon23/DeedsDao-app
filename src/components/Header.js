@@ -32,7 +32,7 @@ const Header = ({setMobileOpen, mobileOpen}) => {
           Docs
         </a>
 
-        <a target="_blank" rel="noopener noreferrer" href="https://app.gitbook.com/o/9s1HWmu67VMunIKY0cOc/s/ntM5l4suiGLNXTWUeHAb/">
+        <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/k94YXwJ4">
           <img src={discord} alt="Discord" />
           Discord
         </a>
@@ -73,7 +73,7 @@ const AccountAddress = styled.div`
   span {
     height: 32px;
     padding: 8px;
-    background: #ae92bb;
+    background: ${secondaryColor};
     border-radius: 8px;
   }
 `;

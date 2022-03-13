@@ -72,7 +72,6 @@ const FormWrapper = styled.div`
     background: #00000061;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 0 8px #9797971c;
   }
 `;
 
@@ -95,17 +94,21 @@ const InputWrapper = styled.div`
     background: linear-gradient(45deg,rgba(111 197 254 / 50%),rgb(148 92 209 / 50%),rgb(170 72 167 / 50%));
     padding: 4px;
     border-radius: 8px;
+    transform: translateY(2px);
 
     &:focus-within {
       background: linear-gradient(45deg, ${primaryColor}, ${secondaryColor}, ${thirdColor});
     }
   }
 
+  input {
+    height: 36px;
+  }
+
   input, textarea {
     width: 242px;
     border-radius: 4px;
     border: none;
-    height: 32px;
     outline: unset;
     padding: 8px;
     font-size: 16px;

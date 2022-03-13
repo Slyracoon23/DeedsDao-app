@@ -4,7 +4,7 @@ const primaryColorDark = '#0097a7';
 const primaryColorHovered = '#00acc1';
 
 // pink
-const secondaryColor = '#ae92bb';
+const secondaryColor = '#bb8cd0';
 const secondaryColorDark = '#d123dd';
 
 // purple

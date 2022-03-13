@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import { breakpoint, device } from '../constants/breakpoints';
-import { secondaryColor } from '../constants/theme';
+import { secondaryColor, secondaryColorDark } from '../constants/theme';
 
 const Wrapper = styled.div`
     box-shadow: 0 0 0 2px ${secondaryColor}, inset 0 0 20px 20px #0000000f;
@@ -14,7 +14,50 @@ const Wrapper = styled.div`
     ${breakpoint(device.lg)} {
       max-width: 665px;
     }
-  `;
+`;
+
+const InvisibleWrapper = styled(Wrapper)`
+    box-shadow: none;
+`;
+
+const StyledHero = styled.div`
+  display: flex;
+  height: 200px;
+  background: #cb58ff4a;
+
+    & > div {
+      margin: 40px auto;
+      max-width: 940px;
+
+      .buttons-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
+
+        button:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+`;
+
+const StyledHeroSmall = styled(StyledHero)`
+  height: 130px;
+`;
+
+const HeroSmall = ({children}) => (
+  <StyledHeroSmall>
+    {children}
+  </StyledHeroSmall>
+);
+
+const Hero = ({children}) => (
+  <StyledHero>
+    {children}
+  </StyledHero>
+);
+
 
 const ContentWrapper = ({children}) => (
   <Wrapper>
@@ -22,4 +65,10 @@ const ContentWrapper = ({children}) => (
   </Wrapper>
 );
 
-export {  ContentWrapper };
+const ContentWrapperInvisible = ({children}) => (
+  <InvisibleWrapper>
+    {children}
+  </InvisibleWrapper>
+);
+
+export {  Hero, HeroSmall, ContentWrapper, ContentWrapperInvisible };

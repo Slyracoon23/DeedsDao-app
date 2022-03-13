@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Routes, Route } from "react-router-dom";
-import styled from "styled-components";
 import Home from './components/Home';
 import Header from './components/Header';
-import AddNewDeed from './components/AddNewDeed';
+import Pool from './components/Pool';
+import AddPool from './components/AddPool';
+import Swap from './components/Swap';
 
 const App = () => {
   const [ addClicked, setAddClicked ] = useState(false);
@@ -19,7 +20,9 @@ const App = () => {
       <Header/>
       <Routes>
         <Route path="/" element={<Home addClicked={addClicked} setAddClicked={setAddClicked} />} />
-        <Route path="/new-deed" element={<AddNewDeed />} />
+        <Route path="/pool" element={<Pool />} />
+        <Route path="/add-pool" element={<AddPool />} />
+        <Route path="/swap" element={<Swap />} />
       </Routes>
     </div>
   );
