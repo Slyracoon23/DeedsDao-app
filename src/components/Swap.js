@@ -1,59 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { ContentWrapperInvisible, HeroSmall } from '../shared/Layout';
 import { H1Dark, H1DarkSmall } from '../shared/Typography';
+import SwapInput from '../shared/SwapInput';
 import { TextInput } from '../shared/Form';
 import { secondaryColor } from '../constants/theme';
+import TokenList from '../shared/TokenList';
 
 const Swap = () => {
-  const [ addClicked, setAddClicked ] = useState(false);
+  const [ amountFrom, setAmountFrom ] = useState('0.0');
+  const [ tokenFrom, setTokenFrom ] = useState('ETH');
+  const [ amountTo, setAmountTo ] = useState('0.0');
+  const [ tokenTo, setTokenTo ] = useState(null);
+
+  useEffect(() => {
+    setFrom({
+      label: 'From',
+      token: tokenFrom,
+      setToken: setTokenFrom,
+      amount: amountFrom,
+      setAmount: setAmountFrom
+    });
+  }, [tokenFrom, setTokenFrom, amountFrom, setAmountFrom]);
+
+  useEffect(() => {
+    setTo({
+      label: 'To',
+      token: tokenTo,
+      setToken: setTokenTo,
+      amount: amountTo,
+      setAmount: setAmountTo
+    });
+  }, [tokenTo, setTokenTo, amountTo, setAmountTo]);
+  
+  const [ from, setFrom ] = useState({
+    label: 'From',
+    token: tokenFrom,
+    setToken: setTokenFrom,
+    amount: amountFrom,
+    setAmount: setAmountFrom
+  });
+
+  const [ to, setTo ] = useState({
+    label: 'To',
+    token: tokenTo,
+    setToken: setTokenTo,
+    amount: amountTo,
+    setAmount: setAmountTo
+  });
 
   return (
-    <main> 
+    <main>
       <HeroSmall>
         <div>
           <H1DarkSmall>Swap</H1DarkSmall>
-          
           Trade without intermediaries through our AMM exchange.
         </div>
       </HeroSmall> 
       <ContentWrapperInvisible>
         <SwapWrapper>
-          <SwapInput label={'From'} value={'0.0'} onChange={() => {}} token={'ETH'} />
+          <SwapInput data={from} />
           <img src={''} alt="" onClick={() => {}} />
-          <SwapInput label={'To'} value={'0.0'} onChange={() => {}} token={null} />
-        </SwapWrapper> 
-        
+          <SwapInput data={to} />
+        </SwapWrapper>
       </ContentWrapperInvisible>
     </main>
   )
-}
-
-const SwapInput = ({ label, value, onChange, token }) => {
-  return (
-    <div>
-      <span>{label}</span>
-        <div>
-          <TextInput value={value} onChange={onChange} />
-          {token ? (
-            <ButtonOutlined>
-              <img src="/" alt="" />
-              <span>
-                {token}
-              </span>
-              <img src="/" alt="" />
-            </ButtonOutlined>
-          ) : (
-            <ButtonFilled>
-              <span>
-                Select Token
-              </span>
-              <img src="/" alt="" />
-            </ButtonFilled>
-          )}
-        </div>
-    </div>
-  );
 }
 
 const SwapWrapper = styled.div`
@@ -86,26 +98,5 @@ const SwapWrapper = styled.div`
     }
   }
 `;
-
-const Button = styled.button`
-  border-radius: 4px;
-  height: 40px;
-  padding: 4px 8px;
-  font-size: 18px;
-  color: white;
-`
-
-const ButtonFilled = styled(Button)`
-  background: ${secondaryColor};
-  & > * {
-    color: white;
-  }
-`;
-
-const ButtonOutlined = styled(Button)`
-  box-shadow: inset 0 0 0 1px ${secondaryColor};
-`;
-
-
 
 export default Swap;

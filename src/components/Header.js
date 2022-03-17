@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../assets/logo.png';
 import { breakpoint, device } from '../constants/breakpoints';
+import { useWeb3 } from '../services/useWeb3';
 import { menu, menuHeight } from '../constants/menu';
 import { docs, discord } from '../constants/icons';
 import { primaryColor, secondaryColor } from '../constants/theme';
 
-const Header = ({setMobileOpen, mobileOpen}) => {
-  const accountAddress = '0x137054be6978FcC75617bDF918cA91947a0DA94c';
+const Header = ({ mobileOpen, setMobileOpen }) => {
+  const isComponentMounted = useRef(true);
+  const [ currentAddress, setCurrentAddress ] = useState('');
+  const { connect } = useWeb3(isComponentMounted, setCurrentAddress);
 
   const menuEntries = menu.map(entry => (
     <li key={entry.idx}><Link to={entry.url} onClick={ () => setMobileOpen(false) }>{entry.label}</Link></li>
   ));
 
-  const shortAddress = (address) => address.substring(0,5) 
-    + '..' 
-    + address.substring(address.length - 3, address.length)
+  const shortAddress = (address) => address?.length > 0
+    ? address.substring(0,5)
+      + '..'
+      + address.substring(address.length - 3, address.length)
+    : '';
+    console.log(currentAddress, shortAddress(currentAddress));
 
   return (
     <FullHeader>
@@ -39,7 +45,10 @@ const Header = ({setMobileOpen, mobileOpen}) => {
       </Links>
 
       <AccountAddress>
-        <span>{shortAddress(accountAddress)}</span>
+        {currentAddress === '' 
+          ? <span onClick={() => connect(setCurrentAddress)}>Connect Wallet</span>
+          : <span>{shortAddress(currentAddress)}</span>
+        }
       </AccountAddress>
     </FullHeader>
   )
@@ -75,6 +84,8 @@ const AccountAddress = styled.div`
     padding: 8px;
     background: ${secondaryColor};
     border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
   }
 `;
 
