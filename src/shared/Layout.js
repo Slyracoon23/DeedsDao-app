@@ -12,7 +12,8 @@ const Wrapper = styled.div`
     border-radius: 6px;
 
     ${breakpoint(device.lg)} {
-      max-width: 665px;
+      max-width: calc(100% - 40px);
+      padding: 40px 20px;
     }
 `;
 
@@ -28,6 +29,14 @@ const StyledHero = styled.div`
     & > div {
       margin: 40px auto;
       max-width: 940px;
+
+      ${breakpoint(device.lg)} {
+        padding: 0 40px;
+
+        h1 {
+          font-size: 24px;
+        }
+      }
 
       .buttons-wrapper {
         display: flex;

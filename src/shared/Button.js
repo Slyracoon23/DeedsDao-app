@@ -16,6 +16,22 @@ const Button = styled.button`
   }
 `;
 
+const ButtonSmall = styled(Button)`
+  height: 30px;
+  font-size: 11px;
+  font-weight: bold;
+
+  & > * { letter-spacing: 0; }
+`;
+
+const StyledButtonSmallFilled = styled(ButtonSmall)`
+  background: ${secondaryColor};
+`;
+
+const StyledButtonSmallOutlined = styled(ButtonSmall)`
+  box-shadow: inset 0 0 0 1px ${secondaryColor};
+`;
+
 const StyledButtonFilled = styled(Button)`
   background: ${secondaryColor};
 `;
@@ -24,12 +40,24 @@ const StyledButtonOutlined = styled(Button)`
   box-shadow: inset 0 0 0 1px ${secondaryColor};
 `;
 
+const ButtonSmallFilled = ({children, props}) => (
+  <StyledButtonSmallFilled {...props}>
+    {children}
+  </StyledButtonSmallFilled>
+);
+
+const ButtonSmallOutlined = ({children, props}) => (
+  <StyledButtonSmallOutlined {...props}>
+    {children}
+  </StyledButtonSmallOutlined>
+);
+
+
 const ButtonFilled = ({children, props}) => (
   <StyledButtonFilled {...props}>
     {children}
   </StyledButtonFilled>
 );
-
 
 const ButtonOutlined = ({children, props}) => (
   <StyledButtonOutlined {...props}>
@@ -37,4 +65,4 @@ const ButtonOutlined = ({children, props}) => (
   </StyledButtonOutlined>
 );
 
-export { ButtonFilled, ButtonOutlined };
+export { ButtonFilled, ButtonOutlined, ButtonSmallFilled, ButtonSmallOutlined };

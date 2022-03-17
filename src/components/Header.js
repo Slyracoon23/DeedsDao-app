@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../assets/logo.png';
 import { breakpoint, device } from '../constants/breakpoints';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useWeb3 } from '../services/useWeb3';
-import { menu, menuHeight } from '../constants/menu';
 import { docs, discord } from '../constants/icons';
 import { primaryColor, secondaryColor } from '../constants/theme';
+import { menu, hamburgerIcon, closeIcon, menuHeight } from '../constants/menu';
 
 const Header = ({ mobileOpen, setMobileOpen }) => {
   const isComponentMounted = useRef(true);
+  const isMobile = useMediaQuery(breakpoint(device.lg));
+  const isMobileSmall = useMediaQuery(breakpoint(device.sm));
+
   const [ currentAddress, setCurrentAddress ] = useState('');
   const { connect } = useWeb3(isComponentMounted, setCurrentAddress);
 
@@ -24,25 +28,30 @@ const Header = ({ mobileOpen, setMobileOpen }) => {
     : '';
     console.log(currentAddress, shortAddress(currentAddress));
 
+  const externalLinks = (
+    <Links>
+      <a target="_blank" rel="noopener noreferrer" href="https://app.gitbook.com/o/9s1HWmu67VMunIKY0cOc/s/ntM5l4suiGLNXTWUeHAb/">
+        <img src={docs} alt="Docs" />
+        Docs
+      </a>
+
+      <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/k94YXwJ4">
+        <img src={discord} alt="Discord" />
+        Discord
+      </a>
+    </Links>
+  );
+
   return (
     <FullHeader>
-      <div className="left">
-        <Logo><img src={logo} alt="Logo" /></Logo>
+      <Logo><img src={logo} alt="Logo" /></Logo>
+      {!isMobile && (
         <ul>
           {menuEntries}
         </ul>
-      </div>
-      <Links>
-        <a target="_blank" rel="noopener noreferrer" href="https://app.gitbook.com/o/9s1HWmu67VMunIKY0cOc/s/ntM5l4suiGLNXTWUeHAb/">
-          <img src={docs} alt="Docs" />
-          Docs
-        </a>
-
-        <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/k94YXwJ4">
-          <img src={discord} alt="Discord" />
-          Discord
-        </a>
-      </Links>
+      )}
+      
+      {!isMobileSmall && externalLinks}
 
       <AccountAddress>
         {currentAddress === '' 
@@ -50,9 +59,34 @@ const Header = ({ mobileOpen, setMobileOpen }) => {
           : <span>{shortAddress(currentAddress)}</span>
         }
       </AccountAddress>
+
+      {isMobile && (
+        <MobileMenu>
+          {!mobileOpen && (
+            <div onClick={ () => setMobileOpen(true) }>
+              <img src={hamburgerIcon} alt="Open Menu"  />
+            </div>
+          )}
+          {mobileOpen && (
+            <>
+              <div onClick={ () => setMobileOpen(false) }>
+                <img src={closeIcon} alt="Close Menu"  />
+              </div>
+              <nav className="mobile">
+                <ul>
+                  {menuEntries}
+                  {isMobileSmall && externalLinks}
+                </ul>
+              </nav>
+            </>
+          )}
+        </MobileMenu>
+        )}
     </FullHeader>
   )
 }
+
+
 
 const Links = styled.div`
   flex-grow: 1;
@@ -73,7 +107,6 @@ const Links = styled.div`
   }
 `;
 
-
 const AccountAddress = styled.div`
   display: flex;
   justify-content: center;
@@ -88,7 +121,6 @@ const AccountAddress = styled.div`
     user-select: none;
   }
 `;
-
 
 const Logo = styled.div`
   padding: 20px;
@@ -118,6 +150,7 @@ const FullHeader = styled.div`
 
   ul {
     display: flex;
+    flex-grow: 1;
 
     li {
       line-height: ${menuHeight};
@@ -157,6 +190,65 @@ const FullHeader = styled.div`
           transform: scaleX(1);
           background: ${secondaryColor};
         }
+      }
+    }
+  }
+`;
+
+const MobileMenu = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  cursor: pointer;
+
+  & > div {
+    border-radius: 50%;
+    background: #0000005c;
+    padding: 12px;
+
+    img {
+      width: 16px;
+    }
+  }
+
+  nav.mobile {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: ${menuHeight};
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #221428;
+
+    ul {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      li {
+        margin: 24px 0;
+        line-height: 70px;
+
+        a {
+          font-size: 30px;
+          height: 70px;
+          background: -webkit-linear-gradient(54deg,#55ceffb3,#f96df5);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+
+          &:hover {
+            background: -webkit-linear-gradient(53deg,#39c9f5,#ffc6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        }
+      }
+
+      & > div {
+        margin-right: 0;
       }
     }
   }

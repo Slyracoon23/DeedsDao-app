@@ -18,7 +18,7 @@ const App = () => {
   const [ mobileOpen, setMobileOpen ] = useState(false);
  
   const pageStyle = { 
-    overflow: 'auto',
+    overflow: mobileOpen ? 'hidden' : 'auto',
     height: '100vh',
     marginBottom: 40
   }; 
