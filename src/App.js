@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Home from './components/Home';
 import Header from './components/Header';
 import Pool from './components/Pool';
 import AddPool from './components/AddPool';
 import Swap from './components/Swap';
-import { providers, ethers } from 'ethers';
-import { SwapWidget } from '@uniswap/widgets';
-
-const infuraId = 'cd709467179a42d08da14769f353922e';
-const jsonRpcEndpoint = `https://mainnet.infura.io/v3/${infuraId}`;
-// const jsonRpcProvider = new providers.JsonRpcProvider(jsonRpcEndpoint);
-// const provider = new ethers.providers.Web3Provider(jsonRpcProvider);
+import { breakpoint, device } from './constants/breakpoints';
 
 const App = () => {
   const [ addClicked, setAddClicked ] = useState(false);
   const [ mobileOpen, setMobileOpen ] = useState(false);
+  const isMobile = useMediaQuery(breakpoint(device.lg));
+
+  useEffect(() => {
+    if (mobileOpen && !isMobile) {
+      setMobileOpen(false);
+    }
+
+  }, [isMobile, mobileOpen])
  
   const pageStyle = { 
-    overflow: mobileOpen ? 'hidden' : 'auto',
+    overflow: isMobile && mobileOpen ? 'hidden' : 'auto',
     height: '100vh',
     marginBottom: 40
   }; 

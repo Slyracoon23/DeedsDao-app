@@ -4,21 +4,21 @@ import { breakpoint, device } from '../constants/breakpoints';
 import { secondaryColor, secondaryColorDark } from '../constants/theme';
 
 const Wrapper = styled.div`
-    box-shadow: 0 0 0 2px ${secondaryColor}, inset 0 0 20px 20px #0000000f;
-    max-width: fit-content;
-    padding: 40px;
-    background: linear-gradient(46deg, #ffffff00, #00000029);
-    margin: 50px auto;
-    border-radius: 6px;
+  box-shadow: 0 0 0 2px ${secondaryColor}, inset 0 0 20px 20px #0000000f;
+  max-width: fit-content;
+  padding: 40px;
+  background: linear-gradient(46deg, #ffffff00, #00000029);
+  margin: 50px auto;
+  border-radius: 6px;
 
-    ${breakpoint(device.lg)} {
-      max-width: calc(100% - 40px);
-      padding: 40px 20px;
-    }
+  ${breakpoint(device.lg)} {
+    max-width: calc(100% - 40px);
+    padding: 40px 20px;
+  }
 `;
 
 const InvisibleWrapper = styled(Wrapper)`
-    box-shadow: none;
+  box-shadow: none;
 `;
 
 const StyledHero = styled.div`
