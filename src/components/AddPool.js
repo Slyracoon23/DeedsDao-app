@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { ButtonOutlined } from '../shared/Button';
 import { Form } from '../shared/Form';
 import { HeroSmall } from '../shared/Layout';
+import { breakpoint, device } from '../constants/breakpoints';
 
 const AddPool2 = () => {
   const [ step1Submitted, onStep1Submitted] = useState(false);
@@ -33,7 +34,7 @@ const AddPool2 = () => {
   ]
 
   return (
-    <>
+    <FullWrapper>
       <HeroSmall>
         <div>
           <ButtonOutlined onClick={() => {}}><Link to="/pool">‹ Back to Deposits</Link></ButtonOutlined>
@@ -41,7 +42,7 @@ const AddPool2 = () => {
         </div>
       </HeroSmall>
       <AddPoolWrapper>
-        <div>
+        <div className="steps">
           <div onClick={() => {onStep3Submitted(false); onStep2Submitted(false); onStep1Submitted(false); }} className={`step ${!step1Submitted ? 'active' : ''}`}><div>1</div><p>Choose NFTs</p></div>
           <div onClick={() => {onStep3Submitted(false); onStep2Submitted(false); }} className={`step ${step1Submitted && !step2Submitted ? 'active' : ''}`}><div>2</div><p>Choose token &amp; weights</p></div>
           <div onClick={() => {onStep3Submitted(false); }} className={`step ${step2Submitted && !step3Submitted ? 'active' : ''}`}><div>3</div><p>Confirm pool creation</p></div>
@@ -50,19 +51,44 @@ const AddPool2 = () => {
         {step1Submitted && !step2Submitted && <Form inputs={inputsStep2} />}
         {step2Submitted && !step3Submitted && <Form inputs={inputsStep3} />}
       </AddPoolWrapper>
-  </>
+  </FullWrapper>
   );
 }
 
+const FullWrapper = styled.div`
+  ${breakpoint(device.md)} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`
+
 const AddPoolWrapper = styled.div`
-    display:flex;
+    display: flex;
     padding: 40px;
     justify-content: center;
+
+    ${breakpoint(device.md)} {
+      flex-direction: column;
+    }
+
+    .steps {
+      ${breakpoint(device.md)} {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
 
     .step {
       position: relative;
       display: flex;
       margin-bottom: 26px;
+
+      ${breakpoint(device.md)} {
+        flex-direction: column;
+        margin: 0 10px 40px 10px;
+        align-items: center;
+      }
 
       &.active div {
           background: #744292;
@@ -81,6 +107,10 @@ const AddPoolWrapper = styled.div`
         height: 25px;
         background: white;
         top: 30px;
+
+        ${breakpoint(device.md)} {
+          content: unset;
+        }
       }
 
       div {
@@ -88,12 +118,18 @@ const AddPoolWrapper = styled.div`
         box-shadow: 0 0 0 1px #744292;
         border-radius: 50%;
         margin-right: 12px;
-        width: 30px;
+        min-width: 30px;
+        max-width: 30px;
         height: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 6px;
+
+        ${breakpoint(device.md)} {
+          flex-direction: column;
+          margin: 0 0 4px 0;
+        }
       }
     }
   }
