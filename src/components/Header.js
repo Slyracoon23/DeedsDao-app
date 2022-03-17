@@ -44,7 +44,7 @@ const Header = ({ mobileOpen, setMobileOpen }) => {
 
   return (
     <FullHeader>
-      <Logo><img src={logo} alt="Logo" /></Logo>
+      <Logo><Link to='/'><img src={logo} alt="Logo" /></Link></Logo>
       {!isMobile && (
         <ul>
           {menuEntries}
