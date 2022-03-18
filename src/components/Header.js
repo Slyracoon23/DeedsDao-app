@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../assets/logo.png';
@@ -16,36 +16,35 @@ const shortAddress = (address) => address?.length > 0
 : '';
 
 const Header = ({ mobileOpen, setMobileOpen }) => {
-  const isComponentMounted = useRef(true);
   const isMobile = useMediaQuery(breakpoint(device.lg));
   const isMobileSmall = useMediaQuery(breakpoint(device.sm));
 
-  const [ currentAddress, setCurrentAddress ] = useState('');
-  const { connect } = useWeb3(isComponentMounted, setCurrentAddress);
+  const { connect, currentAddress } = useWeb3();
+
 
   useEffect(() => {
-    const mockPoolName = 'TestPool';
-    const mockPoolSymbol = '50WETH-50USDT';
-    const mockSwapFee = '0.01';
-    const tokens = [
-      {
-        tokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-        weight: 20,
-        isLocked: false,
-        id: '1',
-        amount: '0'
-      },
-      {
-        tokenAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-        weight: 10,
-        isLocked: false,
-        id: '2',
-        amount: '0'
-      }
-    ];
-    const mockOwner = '0xcCe290153d64C1431bE349A94fa15bBcC54743b7';
+    // const mockPoolName = 'TestPool';
+    // const mockPoolSymbol = '50WETH-50USDT';
+    // const mockSwapFee = '0.01';
+    // const tokens = [
+    //   {
+    //     tokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    //     weight: 20,
+    //     isLocked: false,
+    //     id: '1',
+    //     amount: '0'
+    //   },
+    //   {
+    //     tokenAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+    //     weight: 10,
+    //     isLocked: false,
+    //     id: '2',
+    //     amount: '0'
+    //   }
+    // ];
+    // const mockOwner = '0xcCe290153d64C1431bE349A94fa15bBcC54743b7';
 
-    createWeightedPool(mockPoolName, mockPoolSymbol, mockSwapFee, tokens, mockOwner)
+    // createWeightedPool(mockPoolName, mockPoolSymbol, mockSwapFee, tokens, mockOwner)
   }, []);
 
   const menuEntries = menu.map(entry => (
@@ -79,7 +78,7 @@ const Header = ({ mobileOpen, setMobileOpen }) => {
 
       <AccountAddress>
         {currentAddress === '' 
-          ? <span onClick={() => connect(setCurrentAddress)}>Connect Wallet</span>
+          ? <span onClick={() => connect()}>Connect Wallet</span>
           : <span>{shortAddress(currentAddress)}</span>
         }
       </AccountAddress>

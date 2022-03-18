@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import detectEthereumProvider from '@metamask/detect-provider'; // as recommended here: https://docs.metamask.io/guide/provider-migration.html#table-of-contents
 import BigNumber from 'bignumber.js';
 import { Contract } from '@ethersproject/contracts';
@@ -11,70 +11,91 @@ import { ethers } from 'ethers';
   const infuraId = 'cd709467179a42d08da14769f353922e';
   const rpcUrl = `https://${network}.infura.io/v3/${infuraId}`
 */
-function handleAccountsChanged(accounts) {
-  // console.log('Calling HandleChanged')
-  
-  // if (accounts.length === 0) {
-  //     console.log('Please connect to MetaMask.');
-  //     $('#enableMetamask').html('Connect with Metamask')
-  // } else if (accounts[0] !== currentAccount) {
-  //     currentAccount = accounts[0];
-  //     $('#enableMetamask').html(currentAccount)
-  //     $('#status').html('')
-      
-  //     if(currentAccount != null) {
-  //         // Set the button label
-  //         $('#enableMetamask').html(currentAccount)
-  //     }
-  // }
-  // console.log('WalletAddress in HandleAccountChanged ='+walletAddress)
-}
 
-const Web3 = require('web3');
-
-export const connect = async (setAddress) => {
-  let provider = await detectEthereumProvider(); // if Metamask is installed
-
-  if (!provider || provider !== window.ethereum) { // provider !== window.ethereum means something is overwriting it, perhaps another wallet
-    window.alert('Please install Metamask!');
-    return;
-  }
-  
-  const accounts = await window.ethereum.enable() // if Metamask is installed *but* locked
-    .then(() => window.ethereum.request({ method: "eth_accounts", }))
-    // .then(handleAccountsChanged)
-    // .catch((err) => {
-    //   if (err.code === 4001) {
-    //       // EIP-1193 userRejectedRequest error
-    //       // If this happens, the user rejected the connection request.
-    //       console.log('Please connect to MetaMask.');
-    //   } else {
-    //       console.error(err);
-    //   }
-    // });
-
-  if (accounts.length !== 0) {
-    window.web3 = new Web3(window.ethereum);
-    setAddress(accounts[0]);
-  } else {
-    window.alert('An account on Metamask is required!');
+const checkChain = (chainId) => {
+  if (chainId !== '1' && chainId !== '0x1') {
+    window.alert('Wrong network! Please change to Ethereum mainnet.')
   }
 }
 
-export const useWeb3 = (ref, setAddress) => {
+export const useWeb3 = () => {
+  const isComponentMounted = useRef(true);
+  const isConnectCalled = useRef(false);
+  const isConnected = useRef(false);
+  const [ accounts, setAccounts ] = useState([]);
+  const [ chain, setChain ] = useState('');
+  const [ currentAddress, setCurrentAddress ] = useState('');
+  const [ provider ] = useState(window.ethereum);
+
+  const getAccounts = useCallback(async () => {
+    if (!isConnected.current) return [];
+
+    await provider.request({ method: "eth_accounts", })
+      .then(setAccounts);
+
+    provider.on("accountsChanged", (accounts) => {
+      setAccounts(accounts);
+    });
+  }, [provider]);
+
+  const getChain = useCallback(async () => {
+    const chainId = await provider.request({ method: "net_version", params: [] })
+      .then(setChain);
+
+    checkChain(chainId);
+    provider.on("chainChanged", (chainId) => {
+      checkChain(chainId);
+    });
+  }, [provider]);
+
+  const connect = useCallback(async () => {
+    console.log('connect', isConnectCalled.current);
+
+    if (isConnectCalled.current) return;
+
+    isConnectCalled.current = true;
+
+    // is Metamask installed?
+    const detectedProvider = await detectEthereumProvider(); 
   
+    // detectedProvider !== window.ethereum means something is overwriting it, perhaps another wallet
+    if (!detectedProvider || detectedProvider !== window.ethereum) { 
+      window.alert('Please install Metamask!');
+      return;
+    }
+
+    isConnected.current = true;
+
+    await getAccounts();
+    await getChain();
+  }, [getAccounts, getChain]);
+
+  useEffect(() => {
+    if (accounts.length > 0) {
+      setCurrentAddress(accounts[0]);
+    }
+  }, [accounts]);
+
   useEffect(() => {
     (async () => {
-      if (ref.current) {
-        await connect(setAddress);
+      if (isComponentMounted.current) {
+        connect();
       }
       return () => {
-        ref.current = false; // cleanup, removes hook dependency once/if user leaves component
-      };                     // => shouldn't happen since hook is used in Header
+        // cleanup, removes hook dependency if not used anymore aka user leaves that component
+        // => shouldn't happen since hook is used in Header (always present)
+        isComponentMounted.current = false; 
+      };                     
     })();
-  }, [ref, setAddress]);
+  }, [connect, isComponentMounted]);
 
-  return { connect };
+  return { 
+    connect, 
+    isConnected: isConnected.current, 
+    accounts, 
+    currentAddress, 
+    currentChain: chain 
+  };
 };
 
 export const createWeightedPool = async (
@@ -91,7 +112,6 @@ export const createWeightedPool = async (
   if (!owner.length) return Promise.reject('No pool owner specified');
 
   const weightedPoolFactoryAddress = "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9" // KOVAN NETWORK weightedPoolFactory Address  
-debugger
   const tokenAddresses = tokens.map((token) => {
       return token.tokenAddress;
   });
