@@ -1,13 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../assets/logo.png';
 import { breakpoint, device } from '../constants/breakpoints';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useWeb3 } from '../services/useWeb3';
+import { useWeb3, createWeightedPool } from '../services/useWeb3';
 import { docs, discord } from '../constants/icons';
 import { primaryColor, secondaryColor } from '../constants/theme';
 import { menu, hamburgerIcon, closeIcon, menuHeight } from '../constants/menu';
+
+const shortAddress = (address) => address?.length > 0
+? address.substring(0,5)
+  + '..'
+  + address.substring(address.length - 3, address.length)
+: '';
 
 const Header = ({ mobileOpen, setMobileOpen }) => {
   const isComponentMounted = useRef(true);
@@ -17,17 +23,35 @@ const Header = ({ mobileOpen, setMobileOpen }) => {
   const [ currentAddress, setCurrentAddress ] = useState('');
   const { connect } = useWeb3(isComponentMounted, setCurrentAddress);
 
+  useEffect(() => {
+    const mockPoolName = 'TestPool';
+    const mockPoolSymbol = '50WETH-50USDT';
+    const mockSwapFee = '0.01';
+    const tokens = [
+      {
+        tokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        weight: 20,
+        isLocked: false,
+        id: '1',
+        amount: '0'
+      },
+      {
+        tokenAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        weight: 10,
+        isLocked: false,
+        id: '2',
+        amount: '0'
+      }
+    ];
+    const mockOwner = '0xcCe290153d64C1431bE349A94fa15bBcC54743b7';
+
+    createWeightedPool(mockPoolName, mockPoolSymbol, mockSwapFee, tokens, mockOwner)
+  }, []);
+
   const menuEntries = menu.map(entry => (
     <li key={entry.idx}><Link to={entry.url} onClick={ () => setMobileOpen(false) }>{entry.label}</Link></li>
   ));
-
-  const shortAddress = (address) => address?.length > 0
-    ? address.substring(0,5)
-      + '..'
-      + address.substring(address.length - 3, address.length)
-    : '';
-    console.log(currentAddress, shortAddress(currentAddress));
-
+ 
   const externalLinks = (
     <Links>
       <a target="_blank" rel="noopener noreferrer" href="https://app.gitbook.com/o/9s1HWmu67VMunIKY0cOc/s/ntM5l4suiGLNXTWUeHAb/">
