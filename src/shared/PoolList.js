@@ -6,7 +6,6 @@ import { breakpoint, device } from '../constants/breakpoints';
 import { poolList } from '../constants/mockup-data';
 import { Link } from "react-router-dom";
 
-
 const PoolList = ({items, withAddPool, noActions}) => {
   const [ summaryOpen, setSummaryOpen ] = useState(false);
   const [ summaryIdx, setSummaryIdx ] = useState(false);
@@ -76,6 +75,9 @@ const StyledPoolList = styled.div`
     background: #55a4d8;
 
     span {
+      margin: auto 0;
+      height: 8px;
+
       &.title {
       font-weight: bold;
       }

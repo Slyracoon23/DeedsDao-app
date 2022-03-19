@@ -15,21 +15,6 @@ const AddPool2 = () => {
   const [ step2Submitted, onStep2Submitted ] = useState(false);
   const [ step3Submitted, onStep3Submitted ] = useState(false);
 
-  const inputsStep2 = [
-    { id: 'token-name', value: 'DeedXY', label: 'Token Name', type: 'text' },
-    { id: 'ticker-symbol', value: 'USDT', label: 'Ticker symbol', type: 'text' },
-    { id: 'total-supply', value: '1000000', label: 'Total Supply', type: 'text' },
-    { id: 'percentage-to-unlock', value: '30%', label: 'Percentage of supply needed to unlock NFT-collection', type: 'text' },
-    { id: 'description', value: 'Add description...', label: 'Description (optional)', type: 'textarea' },
-    { id: 'submit', label: 'Confirm', type: 'submit', action: onStep1Submitted }
-  ];
-
-  const inputsStep3  = [
-    { id: 'token-name', value: 'DeedXY', label: 'Token Name', type: 'text' },
-    { id: 'description', value: 'Add description...', label: 'Description (optional)', type: 'textarea' },
-    { id: 'submit', label: 'Create pool', type: 'submit', action: onStep3Submitted }
-  ]
-
   const onChange = () => {};
 
   return (
@@ -77,22 +62,39 @@ const AddPool2 = () => {
           </Step2>
         )}
         {step2Submitted && !step3Submitted && (
-          <div style={{ marginLeft: 20 }}>
+          <Step3>
            <PoolSummary whenAddingPool={true} />
            <ButtonSubmit onClick={() => onStep3Submitted(true)} label="Create Pool" />
-          </div>
+          </Step3>
         )}
       </div>
   </AddPoolWrapper>
   );
 }
 
+const Step3 = styled.div`
+  margin-left: 20px;
+
+  ${breakpoint(device.lg)} {
+    margin: 0;
+  }
+`;
+
 const Step2 = styled.div`
   margin-left: 20px;
+
+  ${breakpoint(device.lg)} {
+    margin: 0;
+  }
 
   table {
     margin-left: -8px;
 
+    ${breakpoint(device.lg)} {
+      margin-left: -32px;
+      width: calc(100% + 64px);
+    }
+    
     th {
       text-align: left;
       padding: 0 8px 8px 8px;
@@ -111,10 +113,16 @@ const Step2 = styled.div`
       }
     }
   }
+
+  .button-wrapper {
+    ${breakpoint(device.lg)} {
+      margin-left: -24px;
+    }
+  }
 `;
 
 const AddPoolWrapper = styled.div`
-  ${breakpoint(device.md)} {
+  ${breakpoint(device.lg)} {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -125,12 +133,12 @@ const AddPoolWrapper = styled.div`
     padding: 40px;
     justify-content: center;
 
-    ${breakpoint(device.md)} {
+    ${breakpoint(device.lg)} {
       flex-direction: column;
     }
 
     .steps {
-      ${breakpoint(device.md)} {
+      ${breakpoint(device.lg)} {
         display: flex;
         justify-content: space-between;
       }
@@ -140,7 +148,11 @@ const AddPoolWrapper = styled.div`
         display: flex;
         margin-bottom: 26px;
 
-        ${breakpoint(device.md)} {
+        p {
+          white-space: nowrap;
+        }
+
+        ${breakpoint(device.lg)} {
           flex-direction: column;
           margin: 0 10px 40px 10px;
           align-items: center;
@@ -164,7 +176,7 @@ const AddPoolWrapper = styled.div`
           background: white;
           top: 30px;
 
-          ${breakpoint(device.md)} {
+          ${breakpoint(device.lg)} {
             content: unset;
           }
         }
@@ -182,7 +194,7 @@ const AddPoolWrapper = styled.div`
           align-items: center;
           padding: 6px;
 
-          ${breakpoint(device.md)} {
+          ${breakpoint(device.lg)} {
             flex-direction: column;
             margin: 0 0 4px 0;
           }

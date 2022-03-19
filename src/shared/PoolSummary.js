@@ -1,9 +1,9 @@
 import React from 'react'
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ButtonSmallFilled, ButtonSmallOutlined } from '../shared/Button';
 import { secondaryColor } from '../constants/theme';
 import { nftList } from '../constants/mockup-data';
-import { Link } from "react-router-dom";
+import { breakpoint, device } from '../constants/breakpoints';
 
 const ethIcon = 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png';
 
@@ -77,22 +77,63 @@ const StyledPoolSummary = styled.div`
     margin-left: -8px;
     min-width: 850px;
 
+    ${props => props.whenAddingPool && css`
+      ${breakpoint(device.lg)} {
+        flex-direction: column;
+        min-width: 100%;
+      }
+    `};
+
      & > div {
        width: 33%;
-       margin: ${props => props.whenAddingPool ? '12px' : '12px 20px'};
+
+       &:not(last-child) {
+         margin-right: 20px;
+       }
+
+       ${props => props.whenAddingPool && css`
+        ${breakpoint(device.lg)} {
+          width: 100%;
+          margin: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+       `};
      }
 
     p {
       font-weight: bold;
       padding: 0 0 8px;
       text-align: center;
+
+      ${props => props.whenAddingPool && css`
+        ${breakpoint(device.lg)} {
+          padding: 0;
+          text-align: left;
+          margin-right: 20px;
+          order: 2;
+        }
+      `};
     }
 
     .img-wrapper {
       display: flex;
       justify-content: center;
 
+      ${props => props.whenAddingPool && css`
+        ${breakpoint(device.lg)} {
+          margin-right: 20px;
+        }
+      `};
+
       .img {
+        ${props => props.whenAddingPool && css`
+        ${breakpoint(device.lg)} {
+          width: 24px;
+          height: 24px;
+        }
+      `};
         width: 80px;
         height: 80px;
         border-radius: 4px;
@@ -105,6 +146,18 @@ const StyledPoolSummary = styled.div`
       background: #4a365e;
       margin-top: 20px;
       border-radius: 4px;
+
+      ${props => props.whenAddingPool && css`
+        ${breakpoint(device.lg)} {
+          padding: 4px 10px;
+          line-height: 2;
+          background: #4a365e;
+          border-radius: 4px;
+          margin-top: 0;
+          min-width: 190px;
+          order: 2;
+        }
+      `};
 
       &  > div {
         display: flex;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ButtonSubmit } from '../shared/Form';
 import { nftList } from '../constants/mockup-data';
 import { check } from '../constants/icons';
-
+import { breakpoint, device } from '../constants/breakpoints';
 
 const NftList = ({ onSubmit }) => {
   const [ selectedNfts, setSelectedNfts ] = useState([]);
@@ -50,6 +50,10 @@ const NftList = ({ onSubmit }) => {
 const StyledNftList = styled.div`
   margin-left: 20px;
 
+  ${breakpoint(device.md)} {
+    margin: 0;
+  }
+
   & > p {
     font-size: 20px;
     margin-bottom: 12px;
@@ -57,7 +61,7 @@ const StyledNftList = styled.div`
   }
 
   .list {
-    display: flex;
+    display: inline-flex;
     background: #00000060;
     padding: 20px;
     border-radius: 4px;
