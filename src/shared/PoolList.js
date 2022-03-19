@@ -39,7 +39,7 @@ const PoolList = ({items, withAddPool, noActions}) => {
             <span>{p.market_cap}</span>
             <span>{p.liquidity}</span>
           </div>
-          <div className={'summary ' + (summaryOpen && summaryIdx === p.idx && 'open')}>
+          <div className={'summary ' + (summaryOpen && summaryIdx === p.idx ? 'open' : '')}>
             <PoolSummary noActions={noActions} pool={p}></PoolSummary>
             <div className="buttons-wrapper">
               {p.redeemable && <ButtonSmallPrimaryFilled>Redeem</ButtonSmallPrimaryFilled>}
@@ -120,12 +120,22 @@ const StyledPoolList = styled.div`
     }
 
     &.summary {
-      display: none;
+      display: block;
+      max-height: 0;
       height: auto;
+      padding: 0;
       background: #00000030;
+      transition: all 0s ease;
+
+      &:not(.open) > * {
+        display: none;
+      }
 
       &.open {
-        display: block;
+        padding: 12px 16px;
+      transition: all 0.7s ease;
+
+        max-height: 1000px; // a value that the content should never be able to reach
       }
 
       & > div {
