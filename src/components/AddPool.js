@@ -2,36 +2,35 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonOutlined } from '../shared/Button';
-import { Form } from '../shared/Form';
+import { TextInput, Form, ButtonSubmit } from '../shared/Form';
 import { HeroSmall } from '../shared/Layout';
 import { breakpoint, device } from '../constants/breakpoints';
+import { tokenList } from '../constants/mockup-data';
+import NftList from '../shared/NftList';
+import { Toast } from '../shared/Toast';
+import PoolSummary from "./../shared/PoolSummary";
 
 const AddPool2 = () => {
-  const [ step1Submitted, onStep1Submitted] = useState(false);
-  const [ step2Submitted, onStep2Submitted] = useState(false);
-  const [ step3Submitted, onStep3Submitted] = useState(false);
-  
-  const inputsStep1 = [
+  const [ step1Submitted, onStep1Submitted ] = useState(false);
+  const [ step2Submitted, onStep2Submitted ] = useState(false);
+  const [ step3Submitted, onStep3Submitted ] = useState(false);
+
+  const inputsStep2 = [
     { id: 'token-name', value: 'DeedXY', label: 'Token Name', type: 'text' },
     { id: 'ticker-symbol', value: 'USDT', label: 'Ticker symbol', type: 'text' },
     { id: 'total-supply', value: '1000000', label: 'Total Supply', type: 'text' },
     { id: 'percentage-to-unlock', value: '30%', label: 'Percentage of supply needed to unlock NFT-collection', type: 'text' },
     { id: 'description', value: 'Add description...', label: 'Description (optional)', type: 'textarea' },
-    { id: 'submit', label: 'Add pool', type: 'submit', action: onStep1Submitted }
+    { id: 'submit', label: 'Confirm', type: 'submit', action: onStep1Submitted }
   ];
-
-  const inputsStep2  = [
-    { id: 'token-name', value: 'DeedXY', label: 'Token Name', type: 'text' },
-    { id: 'percentage-to-unlock', value: '30%', label: 'Percentage of supply needed to unlock NFT-collection', type: 'text' },
-    { id: 'description', value: 'Add description...', label: 'Description (optional)', type: 'textarea' },
-    { id: 'submit', label: 'Add pool', type: 'submit', action: onStep2Submitted }
-  ]
 
   const inputsStep3  = [
     { id: 'token-name', value: 'DeedXY', label: 'Token Name', type: 'text' },
     { id: 'description', value: 'Add description...', label: 'Description (optional)', type: 'textarea' },
-    { id: 'submit', label: 'Confirm', type: 'submit', action: onStep3Submitted }
+    { id: 'submit', label: 'Create pool', type: 'submit', action: onStep3Submitted }
   ]
+
+  const onChange = () => {};
 
   return (
     <AddPoolWrapper>
@@ -47,13 +46,72 @@ const AddPool2 = () => {
           <div onClick={() => {onStep3Submitted(false); onStep2Submitted(false); }} className={`step ${step1Submitted && !step2Submitted ? 'active' : ''}`}><div>2</div><p>Choose token &amp; weights</p></div>
           <div onClick={() => {onStep3Submitted(false); }} className={`step ${step2Submitted && !step3Submitted ? 'active' : ''}`}><div>3</div><p>Confirm pool creation</p></div>
         </div>
-        {!step1Submitted && <Form inputs={inputsStep1} />}
-        {step1Submitted && !step2Submitted && <Form inputs={inputsStep2} />}
-        {step2Submitted && !step3Submitted && <Form inputs={inputsStep3} />}
+        {!step1Submitted && <NftList onSubmit={onStep1Submitted} />}
+        {step1Submitted && !step2Submitted && (
+          <Step2>
+            <Toast message={(<p>Congrats! Your NFTs got fractionalized! <span role="img" aria-label="">🎉</span></p>)} />
+            <table>
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Weight</th>
+                  <th>Supply</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tokenList.map(t => (
+                  <tr key={t.idx}>
+                    <td className="title"><TextInput onChange={onChange} value={t.name} /></td>
+                    <td><TextInput onChange={onChange} value={'25%'} /></td>
+                    <td><TextInput onChange={onChange} value={'1.000.000'} /></td>
+                  </tr>
+                ))}
+                <tr>
+                  <td className="title"><TextInput onChange={onChange} value={'ETH'} /></td>
+                  <td><TextInput onChange={onChange} value={'25%'} /></td>
+                  <td><TextInput onChange={onChange} value={'1'} /></td>
+                </tr>
+              </tbody>
+            </table>
+            <ButtonSubmit onClick={() => onStep2Submitted(true)} label="Confirm" />
+          </Step2>
+        )}
+        {step2Submitted && !step3Submitted && (
+          <div style={{ marginLeft: 20 }}>
+           <PoolSummary whenAddingPool={true} />
+           <ButtonSubmit onClick={() => onStep3Submitted(true)} label="Create Pool" />
+          </div>
+        )}
       </div>
   </AddPoolWrapper>
   );
 }
+
+const Step2 = styled.div`
+  margin-left: 20px;
+
+  table {
+    margin-left: -8px;
+
+    th {
+      text-align: left;
+      padding: 0 8px 8px 8px;
+    }
+
+    td {
+      width: 33%;
+      padding: 8px;
+
+      .title {
+        font-weight: bold;
+      }
+
+      & > div, input {
+        width: 100%;
+      }
+    }
+  }
+`;
 
 const AddPoolWrapper = styled.div`
   ${breakpoint(device.md)} {

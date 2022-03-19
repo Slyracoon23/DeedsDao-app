@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
-import styled from "styled-components";
-import { ContentWrapper, ContentWrapperInvisible } from '../shared/Layout';
-import { H2Light, H3Dark } from '../shared/Typography';
-import { ButtonFilled } from '../shared/Button';
-import { PoolList } from '../shared/PoolList';
-import { secondaryColor } from '../constants/theme';
-
+import React from 'react';
+import { ContentWrapperInvisible } from '../shared/Layout';
+import PoolList from '../shared/PoolList';
+import { H2Light } from '../shared/Typography';
 
 const Pool = () => {
-  const [ addClicked, setAddClicked ] = useState(false);
-
   return (
     <main> 
       <ContentWrapperInvisible>

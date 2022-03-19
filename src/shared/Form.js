@@ -17,10 +17,11 @@ const Form = ({inputs}) => (
   </FormWrapper>
 )
 
-const ButtonSubmit = ({onClick, label, id, children}) => (
+const ButtonSubmit = ({onClick, disabled, label, id, children}) => (
   <InputWrapper>
     <div className="button-wrapper">
       <button 
+        disabled={disabled}
         onClick={e => onClick(true)} 
       >{label || 'Submit'}</button>
     </div>
@@ -68,7 +69,7 @@ const FormWrapper = styled.div`
   justify-content: center;
 
   form {
-    background: #00000061;
+    background: #00000060;
     padding: 30px;
     border-radius: 8px;
   }

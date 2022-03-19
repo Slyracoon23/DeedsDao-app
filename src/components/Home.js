@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ContentWrapperInvisible, Hero } from '../shared/Layout';
 import { H1Dark, H2Light } from '../shared/Typography';
 import { ButtonFilled, ButtonOutlined } from '../shared/Button';
-import { PoolList } from '../shared/PoolList';
+import  PoolList  from '../shared/PoolList';
 import { Link } from "react-router-dom";
 
 const Home = () => {

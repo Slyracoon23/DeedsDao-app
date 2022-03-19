@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
-import { secondaryColor  } from '../constants/theme';
+import { primaryColor, secondaryColor } from '../constants/theme';
 
 const Button = styled.button`
   border-radius: 4px;
@@ -32,6 +32,14 @@ const StyledButtonSmallOutlined = styled(ButtonSmall)`
   box-shadow: inset 0 0 0 1px ${secondaryColor};
 `;
 
+const StyledButtonSmallPrimaryFilled = styled(ButtonSmall)`
+  background: ${primaryColor};
+`;
+
+const StyledButtonSmallPrimaryOutlined = styled(ButtonSmall)`
+  box-shadow: inset 0 0 0 1px ${primaryColor};
+`;
+
 const StyledButtonFilled = styled(Button)`
   background: ${secondaryColor};
 `;
@@ -52,6 +60,18 @@ const ButtonSmallOutlined = ({children, props}) => (
   </StyledButtonSmallOutlined>
 );
 
+const ButtonSmallPrimaryFilled = ({children, props}) => (
+  <StyledButtonSmallPrimaryFilled {...props}>
+    {children}
+  </StyledButtonSmallPrimaryFilled>
+);
+
+const ButtonSmallPrimaryOutlined = ({children, props}) => (
+  <StyledButtonSmallPrimaryOutlined {...props}>
+    {children}
+  </StyledButtonSmallPrimaryOutlined>
+);
+
 
 const ButtonFilled = ({children, props}) => (
   <StyledButtonFilled {...props}>
@@ -65,4 +85,4 @@ const ButtonOutlined = ({children, props}) => (
   </StyledButtonOutlined>
 );
 
-export { ButtonFilled, ButtonOutlined, ButtonSmallFilled, ButtonSmallOutlined };
+export { ButtonFilled, ButtonOutlined, ButtonSmallFilled, ButtonSmallOutlined, ButtonSmallPrimaryFilled, ButtonSmallPrimaryOutlined };

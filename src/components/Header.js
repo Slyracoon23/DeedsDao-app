@@ -154,7 +154,7 @@ const Logo = styled.div`
 `;
 
 const FullHeader = styled.div`
-  background: #00000061;
+  background: #00000060;
   box-shadow: -1px 4px 25px 6px rgb(43 61 80 / 48%);
   display: flex;
   padding: 0 20px;

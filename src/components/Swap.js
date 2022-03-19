@@ -5,7 +5,6 @@ import { H1Dark, H1DarkSmall } from '../shared/Typography';
 import SwapInput from '../shared/SwapInput';
 import { TextInput } from '../shared/Form';
 import { secondaryColor } from '../constants/theme';
-import TokenList from '../shared/TokenList';
 
 const Swap = () => {
   const [ amountFrom, setAmountFrom ] = useState('0.0');
@@ -75,7 +74,7 @@ const SwapWrapper = styled.div`
 
     & > div {
       border-radius: 6px;
-      background: #00000059;
+      background: #00000060;
       padding: 16px;
       width: 445px;
       height: fit-content;

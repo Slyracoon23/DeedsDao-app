@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { ButtonFilled, ButtonOutlined } from '../shared/Button';
 import { TextInput } from '../shared/Form';
-import TokenList from '../shared/TokenList';
 
 const SwapInput = ({ data }) => {
   const { label, token, amount, setAmount, setToken } = data;
-  const [ isChangeToken, setChangeToken ] = useState(true);
-
-  console.log(isChangeToken);
 
   return (
     <div>
-      {isChangeToken && <TokenList setToken={setToken} />}
       <span>{label}</span>
         <div>
           <TextInput value={amount} onChange={e => setAmount(e.target.value)} />
