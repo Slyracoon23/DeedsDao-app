@@ -13,8 +13,8 @@ import { ethers } from 'ethers';
 */
 
 const checkChain = (chainId) => {
-  if (chainId !== '1' && chainId !== '0x1') {
-    window.alert('Wrong network! Please change to Ethereum mainnet.')
+  if (chainId && chainId !== '1' && chainId !== '0x1') {
+    window.alert(`Wrong network ${chainId}! Please change to Ethereum mainnet.`);
   }
 }
 
@@ -30,7 +30,9 @@ export const useWeb3 = () => {
   const getAccounts = useCallback(async () => {
     if (!isConnected.current) return [];
 
-    await provider.request({ method: "eth_accounts", })
+    // in case MetaMask is locked, it won't popup unless we're using the deprecated method enable(), no workaround yet found to prevent using it
+    await window.ethereum.enable() 
+      .then(() => provider.request({ method: "eth_accounts", }))
       .then(setAccounts);
 
     provider.on("accountsChanged", (accounts) => {
