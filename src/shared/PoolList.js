@@ -39,16 +39,14 @@ const PoolList = ({items, withAddPool, noActions}) => {
             <span>{p.market_cap}</span>
             <span>{p.liquidity}</span>
           </div>
-          {summaryOpen && summaryIdx === p.idx && (
-            <div className="pool">
-              <PoolSummary noActions={noActions} pool={p}></PoolSummary>
-              <div className="buttons-wrapper">
-                {p.redeemable && <ButtonSmallPrimaryFilled>Redeem</ButtonSmallPrimaryFilled>}
-                <ButtonSmallPrimaryOutlined onClick={() => {}}>Withdraw</ButtonSmallPrimaryOutlined>
-                <ButtonSmallPrimaryOutlined onClick={() => {}}>Swap</ButtonSmallPrimaryOutlined>
-              </div>
+          <div className={'summary ' + (summaryOpen && summaryIdx === p.idx && 'open')}>
+            <PoolSummary noActions={noActions} pool={p}></PoolSummary>
+            <div className="buttons-wrapper">
+              {p.redeemable && <ButtonSmallPrimaryFilled>Redeem</ButtonSmallPrimaryFilled>}
+              <ButtonSmallPrimaryOutlined onClick={() => {}}>Withdraw</ButtonSmallPrimaryOutlined>
+              <ButtonSmallPrimaryOutlined onClick={() => {}}>Swap</ButtonSmallPrimaryOutlined>
             </div>
-          )}
+          </div>
         </React.Fragment>
         ))}
       </div>
@@ -121,10 +119,14 @@ const StyledPoolList = styled.div`
       }
     }
 
-    &.pool {
-      display: block;
+    &.summary {
+      display: none;
       height: auto;
       background: #00000030;
+
+      &.open {
+        display: block;
+      }
 
       & > div {
         margin-bottom: 20px;
