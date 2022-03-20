@@ -17,24 +17,9 @@ const AddPool2 = () => {
 
   const onChange = () => {};
 
-  const steps = [
-    { nr: 1, label: 'Choose NFTs', onClick: () => onStep1Submitted(false), activeCondition: !step1Submitted },
-    { nr: 2, label: 'Choose token & weights', onClick: () => onStep2Submitted(false), activeCondition: step1Submitted && !step2Submitted  },
-    { nr: 3, label: 'Confirm pool creation', onClick: () => onStep3Submitted(false), activeCondition: step2Submitted && !step3Submitted },
-  ]
-
-  const step = (nr, label, onClick, activeCondition) => (
-    <div 
-      key={nr}
-      onClick={onClick} 
-      className={`step ${activeCondition ? 'active' : ''}`}>
-      <div>
-        {nr}
-      </div>
-      <p>{label}</p>
-    </div>
+  const step = ({ nr, label, onClick, activeCondition }) => (
+    <div onClick={onClick} className={`step ${activeCondition ? 'active' : ''}`}><div>{nr}</div><p>{label}</p></div>
   );
-
 
   return (
     <AddPoolWrapper>
@@ -46,7 +31,9 @@ const AddPool2 = () => {
       </HeroSmall>
       <div className="content">
         <div className="steps">
-          {steps.map(s => step(s.nr, s.label, s.onClick, s.activeCondition))}
+          <div onClick={() => {onStep3Submitted(false); onStep2Submitted(false); onStep1Submitted(false); }} className={`step ${!step1Submitted ? 'active' : ''}`}><div>1</div><p>Choose NFTs</p></div>
+          <div onClick={() => {onStep3Submitted(false); onStep2Submitted(false); }} className={`step ${step1Submitted && !step2Submitted ? 'active' : ''}`}><div>2</div><p>Choose token &amp; weights</p></div>
+          <div onClick={() => {onStep3Submitted(false); }} className={`step ${step2Submitted && !step3Submitted ? 'active' : ''}`}><div>3</div><p>Confirm pool creation</p></div>
         </div>
         {!step1Submitted && <NftList onSubmit={onStep1Submitted} />}
         {step1Submitted && !step2Submitted && (
@@ -186,30 +173,23 @@ const AddPoolWrapper = styled.div`
             box-shadow: none;
           }
 
-        
-        &::before, &::after {
+        &:not(:last-child)::after {
           content: '';
           position: absolute;
-          width: 50%;
-          height: 1px;
+          left: 14px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 0;
+          margin-bottom: 0;
+          width: 1px;
+          height: 25px;
           background: white;
           top: 30px;
 
-         
-
-
           ${breakpoint(device.lg)} {
-            /* content: unset; */
+            content: unset;
           }
         }
-
-        &::before {
-            left: -50%;
-          }
-
-          &::after {
-            right: 0;
-          }
 
         div {
           cursor: pointer;
