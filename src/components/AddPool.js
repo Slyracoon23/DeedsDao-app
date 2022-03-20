@@ -148,6 +148,8 @@ const AddPoolWrapper = styled.div`
       }
 
       .step {
+        cursor: pointer;
+        user-select: none;
         position: relative;
         display: flex;
         margin-bottom: 26px;
