@@ -16,6 +16,11 @@ const NftList = ({ onSubmit }) => {
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
+
+    return () => {
+      setFracStarted(false);
+      setTransactionFailed(false);
+    }
   }, [])
 
   const handleSelectedNfts = (idx) => {
