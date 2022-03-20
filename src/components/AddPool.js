@@ -34,7 +34,7 @@ const AddPool2 = () => {
         {!step1Submitted && <NftList onSubmit={onStep1Submitted} />}
         {step1Submitted && !step2Submitted && (
           <Step2>
-            <Toast message={(<p>Congrats! Your NFTs got fractionalized! <span role="img" aria-label="">🎉</span></p>)} />
+            <Toast type='success' message={(<p>Congrats! Your NFTs got fractionalized! <span role="img" aria-label="">🎉</span></p>)} />
             <table>
               <thead>
                 <tr>

@@ -7,5 +7,13 @@ import userFriendly from '../assets/icons/user_friendly.svg';
 import docs from '../assets/icons/docs.svg';
 import discord from '../assets/icons/discord.svg';
 import check from '../assets/icons/check.svg';
+import success from '../assets/icons/success.svg';
+import error from '../assets/icons/error.svg';
+import info from '../assets/icons/info.svg';
 
-export { ethereum, interop, scalability, security, socialSecurity, userFriendly, discord, docs, check };
+export { 
+  ethereum, interop, scalability, security, socialSecurity, userFriendly, 
+  discord, docs, 
+  check,
+  success, error, info 
+};

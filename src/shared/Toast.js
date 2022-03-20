@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { darkGray } from '../constants/theme';
+import { info, success, error } from '../constants/icons';
 
 const Toast = ({message, type}) => {
   const [ removeMessage, setRemoveMessage ] = useState(true);
+  const icons = {
+    error,
+    info,
+    success
+  };
 
   useEffect(() => {
     setTimeout(() => setRemoveMessage(false), 50);
@@ -17,6 +23,7 @@ const Toast = ({message, type}) => {
   return (
     <ToastWrapper type={type} className={removeMessage && 'hidden' }>
       <div>
+        <img src={icons[type] || info} alt={type} />
         {message}
       </div>
     </ToastWrapper>
@@ -37,11 +44,18 @@ const ToastWrapper = styled.div`
   div {
     border-radius: 4px;
     padding: 12px;
+    display: flex;
+    align-items: center;
     background: ${props => 
       props.type === 'info' ? '#afd2e9'
       : props.type === 'error' ? '#ff5722' : '#5cb988'
     };
     color: ${props => props.type === 'info' ? darkGray : 'initial'};
+
+    img {
+      width: 20px;
+      margin-right: 8px;
+    }
   }
   
   &.hidden {
