@@ -6,6 +6,7 @@ import { Toast } from '../shared/Toast';
 import { nftList } from '../constants/mockup-data';
 import { check } from '../constants/icons';
 import UniclyFactory from '../abi/UniclyFactory.json';
+import WeightedPoolFactory from '../abi/WeightedPoolFactory.json';
 import { breakpoint, device } from '../constants/breakpoints';
 
 const NftList = ({ onSubmit }) => {
@@ -35,12 +36,26 @@ const NftList = ({ onSubmit }) => {
     setFracStarted(true);
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     const signer = provider.getSigner();
-    const contractAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3';
-    const uniclyContract = new ethers.Contract(contractAddress, UniclyFactory.abi, signer);
+    const contractAddressUnicly = '0x8a791620dd6260079bf849dc5567adc3f2fdc318';
+    const contractAddressWeightedPool = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707';
+    
+    const uniclyContract = new ethers.Contract(contractAddressUnicly, UniclyFactory.abi, signer);
 
     uniclyContract.createUToken(1000, 18, 'Star Wars', 'uStar', 950, 'Leia')
       .then(e => onSubmit(true))
       .catch(e => setTransactionFailed(e.message));
+
+    const weightedPoolContract = new ethers.Contract(contractAddressWeightedPool, WeightedPoolFactory.abi, signer);
+    const NAME = 'dPunk-dMeebit-dApe';
+    const SYMBOL = 'dPunk-dMeebit-dApe';
+    const WEIGHTS = '';
+    const POOL_SWAP_FEE_PERCENTAGE = '';
+    const ZERO_ADDRESS = '';
+    const tokens = {
+      addresses: ['']
+    };
+
+    weightedPoolContract.create(NAME, SYMBOL, tokens.addresses, WEIGHTS, POOL_SWAP_FEE_PERCENTAGE, ZERO_ADDRESS);
   }
 
   return (

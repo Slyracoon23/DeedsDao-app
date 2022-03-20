@@ -17,6 +17,10 @@ const AddPool2 = () => {
 
   const onChange = () => {};
 
+  const step = ({ nr, label, onClick, activeCondition }) => (
+    <div onClick={onClick} className={`step ${activeCondition ? 'active' : ''}`}><div>{nr}</div><p>{label}</p></div>
+  );
+
   return (
     <AddPoolWrapper>
       <HeroSmall>

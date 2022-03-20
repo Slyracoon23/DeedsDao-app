@@ -34,7 +34,7 @@ const TextInput = ({onChange, onFocus, value, label, id, children}) => (
       {label}
     </label>
     <div>
-      <input 
+      <input
         type="text" 
         value={value} 
         onChange={onChange} 
