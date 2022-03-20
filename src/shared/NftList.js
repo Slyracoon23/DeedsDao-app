@@ -45,6 +45,8 @@ const NftList = ({ onSubmit }) => {
       .then(e => onSubmit(true))
       .catch(e => setTransactionFailed(e.message));
 
+    const tokenAdress1 = uniclyContract.uToken(0);
+
     const weightedPoolContract = new ethers.Contract(contractAddressWeightedPool, WeightedPoolFactory.abi, signer);
     const NAME = 'dPunk-dMeebit-dApe';
     const SYMBOL = 'dPunk-dMeebit-dApe';
@@ -52,8 +54,11 @@ const NftList = ({ onSubmit }) => {
     const POOL_SWAP_FEE_PERCENTAGE = '';
     const ZERO_ADDRESS = '';
     const tokens = {
-      addresses: ['']
+      addresses: [tokenAdress1, ]
     };
+
+
+
 
     weightedPoolContract.create(NAME, SYMBOL, tokens.addresses, WEIGHTS, POOL_SWAP_FEE_PERCENTAGE, ZERO_ADDRESS);
   }
