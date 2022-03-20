@@ -1,10 +1,10 @@
 "use strict";
+import { Decimal } from 'decimal.js';
+import { BigNumber } from 'ethers';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FP_SCALING_FACTOR = exports.divCeil = exports.arraySub = exports.arrayAdd = exports.min = exports.max = exports.pct = exports.minInt = exports.maxInt = exports.maxUint = exports.bn = exports.fromFp = exports.toFp = exports.fp = exports.decimal = void 0;
-var decimal_js_1 = require("decimal.js");
-var ethers_1 = require("ethers");
 var SCALING_FACTOR = 1e18;
-var decimal = function (x) { return new decimal_js_1.Decimal(x.toString()); };
+var decimal = function (x) { return new Decimal(x.toString()); };
 exports.decimal = decimal;
 var fp = function (x) { return (0, exports.bn)((0, exports.toFp)(x)); };
 exports.fp = fp;
@@ -13,11 +13,11 @@ exports.toFp = toFp;
 var fromFp = function (x) { return (0, exports.decimal)(x).div(SCALING_FACTOR); };
 exports.fromFp = fromFp;
 var bn = function (x) {
-    if (ethers_1.BigNumber.isBigNumber(x))
+    if (BigNumber.isBigNumber(x))
         return x;
     var stringified = parseScientific(x.toString());
     var integer = stringified.split('.')[0];
-    return ethers_1.BigNumber.from(integer);
+    return BigNumber.from(integer);
 };
 exports.bn = bn;
 var maxUint = function (e) { return (0, exports.bn)(2).pow(e).sub(1); };
