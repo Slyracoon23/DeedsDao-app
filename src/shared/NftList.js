@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
 import styled from "styled-components";
 import { ButtonSubmit } from '../shared/Form';
+import { Toast } from '../shared/Toast';
 import { nftList } from '../constants/mockup-data';
 import { check } from '../constants/icons';
+import UniclyFactory from '../abi/UniclyFactory.json';
 import { breakpoint, device } from '../constants/breakpoints';
 
 const NftList = ({ onSubmit }) => {
   const [ selectedNfts, setSelectedNfts ] = useState([]);
   const [ loading, setLoading ] = useState(true);
+  const [ fracStarted, setFracStarted ] = useState(false);
+  const [ transactionFailed, setTransactionFailed ] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
@@ -21,8 +26,26 @@ const NftList = ({ onSubmit }) => {
     }
   }
 
+  const fractionalizeNfts = async () => {
+    setFracStarted(true);
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+    const signer = provider.getSigner();
+    const contractAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3';
+    const uniclyContract = new ethers.Contract(contractAddress, UniclyFactory.abi, signer);
+
+    uniclyContract.createUToken(1000, 18, 'Star Wars', 'uStar', 950, 'Leia')
+      .then(e => onSubmit(true))
+      .catch(e => setTransactionFailed(e.message));
+  }
+
   return (
     <StyledNftList>
+      {fracStarted && (
+        <Toast type="info" message={(<p>Please confirm MetaMask transaction to fractionalize your NFTs!</p>)} />
+      )}
+      {transactionFailed && (
+        <Toast type="error" message={'Transaction failed: ' + transactionFailed} />
+      )}
       <p>Your NFTs</p>
       <div className="list">
         {loading && (
@@ -42,7 +65,13 @@ const NftList = ({ onSubmit }) => {
           </div>
         ))}
       </div>
-      {!loading && <ButtonSubmit onClick={() => setTimeout(() => onSubmit(true), 500)} disabled={selectedNfts.length === 0} label="Fractionalize NFTs" />}
+      {!loading && (
+        <ButtonSubmit
+          style={{width: '33%'}}
+          onClick={fractionalizeNfts} 
+          disabled={selectedNfts.length === 0} 
+          label="Fractionalize NFTs" />
+      )}
     </StyledNftList>
   );
 }

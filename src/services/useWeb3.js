@@ -30,10 +30,18 @@ export const useWeb3 = () => {
   const getAccounts = useCallback(async () => {
     if (!isConnected.current) return [];
 
+    console.log(window.ethereum)
+    
+
     // in case MetaMask is locked, it won't popup unless we're using the deprecated method enable(), no workaround yet found to prevent using it
-    await window.ethereum.enable() 
+    await window.ethereum.enable();
+
+    console.log()
+
       .then(() => provider.request({ method: "eth_accounts", }))
       .then(setAccounts);
+
+
 
     provider.on("accountsChanged", (accounts) => {
       setAccounts(accounts);
@@ -51,9 +59,7 @@ export const useWeb3 = () => {
   }, [provider]);
 
   const connect = useCallback(async () => {
-    console.log('connect', isConnectCalled.current);
-
-    if (isConnectCalled.current) return;
+    if (!isConnectCalled.current) return;
 
     isConnectCalled.current = true;
 

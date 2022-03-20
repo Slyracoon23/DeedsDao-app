@@ -17,8 +17,8 @@ const Form = ({inputs}) => (
   </FormWrapper>
 )
 
-const ButtonSubmit = ({onClick, disabled, label, id, children}) => (
-  <InputWrapper>
+const ButtonSubmit = ({onClick, disabled, label, id, children, props}) => (
+  <InputWrapper {...props}>
     <div className="button-wrapper">
       <button 
         disabled={disabled}

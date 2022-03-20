@@ -64,7 +64,7 @@ const AddPool2 = () => {
         {step2Submitted && !step3Submitted && (
           <Step3>
            <PoolSummary whenAddingPool={true} />
-           <ButtonSubmit onClick={() => onStep3Submitted(true)} label="Create Pool" />
+           <ButtonSubmit className="a" onClick={() => onStep3Submitted(true)} label="Create Pool" />
           </Step3>
         )}
       </div>
@@ -85,6 +85,10 @@ const Step2 = styled.div`
 
   ${breakpoint(device.lg)} {
     margin: 0;
+  }
+
+  .a {
+    width: 33;
   }
 
   table {
