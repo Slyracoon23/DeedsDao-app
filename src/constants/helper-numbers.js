@@ -1,17 +1,17 @@
 "use strict";
-import { Decimal } from 'decimal.js';
+import { Decimal } from 'decimal.js-light';
 import { BigNumber } from 'ethers';
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FP_SCALING_FACTOR = exports.divCeil = exports.arraySub = exports.arrayAdd = exports.min = exports.max = exports.pct = exports.minInt = exports.maxInt = exports.maxUint = exports.bn = exports.fromFp = exports.toFp = exports.fp = exports.decimal = void 0;
+const arr = {};
+arr.FP_SCALING_FACTOR = arr.divCeil = arr.arraySub = arr.arrayAdd = arr.min = arr.max = arr.pct = arr.minInt = arr.maxInt = arr.maxUint = arr.bn = arr.fromFp = arr.toFp = arr.fp = arr.decimal = void 0;
 var SCALING_FACTOR = 1e18;
 var decimal = function (x) { return new Decimal(x.toString()); };
-exports.decimal = decimal;
-var fp = function (x) { return (0, exports.bn)((0, exports.toFp)(x)); };
-exports.fp = fp;
-var toFp = function (x) { return (0, exports.decimal)(x).mul(SCALING_FACTOR); };
-exports.toFp = toFp;
-var fromFp = function (x) { return (0, exports.decimal)(x).div(SCALING_FACTOR); };
-exports.fromFp = fromFp;
+arr.decimal = decimal;
+var fp = function (x) { return (0, arr.bn)((0, arr.toFp)(x)); };
+arr.fp = fp;
+var toFp = function (x) { return (0, arr.decimal)(x).mul(SCALING_FACTOR); };
+arr.toFp = toFp;
+var fromFp = function (x) { return (0, arr.decimal)(x).div(SCALING_FACTOR); };
+arr.fromFp = fromFp;
 var bn = function (x) {
     if (BigNumber.isBigNumber(x))
         return x;
@@ -19,41 +19,41 @@ var bn = function (x) {
     var integer = stringified.split('.')[0];
     return BigNumber.from(integer);
 };
-exports.bn = bn;
-var maxUint = function (e) { return (0, exports.bn)(2).pow(e).sub(1); };
-exports.maxUint = maxUint;
-var maxInt = function (e) { return (0, exports.bn)(2).pow((0, exports.bn)(e).sub(1)).sub(1); };
-exports.maxInt = maxInt;
-var minInt = function (e) { return (0, exports.bn)(2).pow((0, exports.bn)(e).sub(1)).mul(-1); };
-exports.minInt = minInt;
-var pct = function (x, pct) { return (0, exports.bn)((0, exports.decimal)(x).mul((0, exports.decimal)(pct))); };
-exports.pct = pct;
+arr.bn = bn;
+var maxUint = function (e) { return (0, arr.bn)(2).pow(e).sub(1); };
+arr.maxUint = maxUint;
+var maxInt = function (e) { return (0, arr.bn)(2).pow((0, arr.bn)(e).sub(1)).sub(1); };
+arr.maxInt = maxInt;
+var minInt = function (e) { return (0, arr.bn)(2).pow((0, arr.bn)(e).sub(1)).mul(-1); };
+arr.minInt = minInt;
+var pct = function (x, pct) { return (0, arr.bn)((0, arr.decimal)(x).mul((0, arr.decimal)(pct))); };
+arr.pct = pct;
 var max = function (a, b) {
-    a = (0, exports.bn)(a);
-    b = (0, exports.bn)(b);
+    a = (0, arr.bn)(a);
+    b = (0, arr.bn)(b);
     return a.gt(b) ? a : b;
 };
-exports.max = max;
+arr.max = max;
 var min = function (a, b) {
-    a = (0, exports.bn)(a);
-    b = (0, exports.bn)(b);
+    a = (0, arr.bn)(a);
+    b = (0, arr.bn)(b);
     return a.lt(b) ? a : b;
 };
-exports.min = min;
+arr.min = min;
 var arrayAdd = function (arrA, arrB) {
-    return arrA.map(function (a, i) { return (0, exports.bn)(a).add((0, exports.bn)(arrB[i])); });
+    return arrA.map(function (a, i) { return (0, arr.bn)(a).add((0, arr.bn)(arrB[i])); });
 };
-exports.arrayAdd = arrayAdd;
+arr.arrayAdd = arrayAdd;
 var arraySub = function (arrA, arrB) {
-    return arrA.map(function (a, i) { return (0, exports.bn)(a).sub((0, exports.bn)(arrB[i])); });
+    return arrA.map(function (a, i) { return (0, arr.bn)(a).sub((0, arr.bn)(arrB[i])); });
 };
-exports.arraySub = arraySub;
+arr.arraySub = arraySub;
 var divCeil = function (x, y) {
     // ceil(x/y) == (x + y - 1) / y
     return x.add(y).sub(1).div(y);
 };
-exports.divCeil = divCeil;
-exports.FP_SCALING_FACTOR = (0, exports.bn)(SCALING_FACTOR);
+arr.divCeil = divCeil;
+arr.FP_SCALING_FACTOR = (0, arr.bn)(SCALING_FACTOR);
 function parseScientific(num) {
     // If the number is not in scientific notation return it as it is
     if (!/\d+\.?\d*e[+-]*\d+/i.test(num))
@@ -99,3 +99,5 @@ export function toNormalizedWeights(weights) {
   
     return normalizedWeights;
   }
+
+export { fp }

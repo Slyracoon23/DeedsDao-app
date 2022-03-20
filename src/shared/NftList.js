@@ -8,6 +8,8 @@ import { check } from '../constants/icons';
 import UniclyFactory from '../abi/UniclyFactory.json';
 import WeightedPoolFactory from '../abi/WeightedPoolFactory.json';
 import { breakpoint, device } from '../constants/breakpoints';
+import { fp, toNormalizedWeights } from '../constants/helper-numbers';
+import { BigNumber } from 'ethers';
 
 const NftList = ({ onSubmit }) => {
   const [ selectedNfts, setSelectedNfts ] = useState([]);
@@ -38,6 +40,8 @@ const NftList = ({ onSubmit }) => {
     const signer = provider.getSigner();
     const contractAddressUnicly = '0x8a791620dd6260079bf849dc5567adc3f2fdc318';
     const contractAddressWeightedPool = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707';
+
+    const wETH = '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0';
     
     const uniclyContract = new ethers.Contract(contractAddressUnicly, UniclyFactory.abi, signer);
 
@@ -45,22 +49,25 @@ const NftList = ({ onSubmit }) => {
       .then(e => onSubmit(true))
       .catch(e => setTransactionFailed(e.message));
 
-    const tokenAdress1 = uniclyContract.uToken(0);
+    const tokenAdress1 = uniclyContract.uTokens(0); // string
 
     const weightedPoolContract = new ethers.Contract(contractAddressWeightedPool, WeightedPoolFactory.abi, signer);
     const NAME = 'dPunk-dMeebit-dApe';
     const SYMBOL = 'dPunk-dMeebit-dApe';
-    const WEIGHTS = '';
-    const POOL_SWAP_FEE_PERCENTAGE = '';
-    const ZERO_ADDRESS = '';
+    const WEIGHTS = toNormalizedWeights([fp(30), fp(70), fp(5), fp(5)]);
+    const POOL_SWAP_FEE_PERCENTAGE = fp(0.01);
+    const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
     const tokens = {
-      addresses: [tokenAdress1, ]
+      addresses: [wETH]
     };
 
 
 
 
-    weightedPoolContract.create(NAME, SYMBOL, tokens.addresses, WEIGHTS, POOL_SWAP_FEE_PERCENTAGE, ZERO_ADDRESS);
+    weightedPoolContract.create(NAME, SYMBOL, [
+      '0x0B306BF915C4d645ff596e518fAf3F9669b97016',
+      '0x9A676e781A523b5d0C0e43731313A708CB607508'
+    ], WEIGHTS, POOL_SWAP_FEE_PERCENTAGE, ZERO_ADDRESS);
   }
 
   return (
